@@ -6,8 +6,7 @@ import Link from "next/link";
 
 const EXPERTISE = [
   { id: 1, title: "Social Media Creatives", category: "Design" },
-  { id: 2, title: "Brand Identity Design", category: "Branding" },
-  { id: 3, title: "Digital Marketing Visuals", category: "Marketing" },
+  { id: 3, title: "Logo Design", category: "Marketing" },
   { id: 4, title: "YouTube Thumbnails", category: "Content Creation" },
   { id: 5, title: "Motion Graphics", category: "Video Editing" },
   { id: 6, title: "Product Creatives", category: "Design" },
@@ -22,7 +21,9 @@ export default function Expertise() {
         <h3 className="mb-16 text-3xl font-bold md:text-5xl">Design Expertise</h3>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {EXPERTISE.map((item, i) => {
-            const isClickable = item.title === "Social Media Creatives";
+            // Convert title to a URL-friendly slug (e.g., "Motion Graphics" -> "/motion-graphics")
+            const currentRoute = `/${item.title.toLowerCase().replace(/\s+/g, '-')}`;
+
             const CardContent = (
               <>
                 <GlowingEffect
@@ -48,14 +49,10 @@ export default function Expertise() {
               </>
             );
 
-            return isClickable ? (
-              <Link href="/social-media-creatives" key={item.id} className="relative group rounded-2xl block">
+            return (
+              <Link href={currentRoute} key={item.id} className="relative group rounded-2xl block">
                 {CardContent}
               </Link>
-            ) : (
-              <div key={item.id} className="relative group rounded-2xl">
-                {CardContent}
-              </div>
             );
           })}
         </div>
