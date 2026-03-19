@@ -45,7 +45,7 @@ const PRINT_MEDIA = [
 
 export default function PrintMediaPage() {
   return (
-    <main className="min-h-screen bg-[#121212] text-white">
+    <main className="min-h-screen bg-transparent">
       <div className="mx-auto max-w-7xl px-8 py-24 md:px-24">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -53,8 +53,8 @@ export default function PrintMediaPage() {
           transition={{ duration: 0.5 }}
         >
           <Link
-            href="/"
-            className="mb-8 inline-flex items-center gap-2 text-gray-400 transition-colors hover:text-white"
+            href="/#design-expertise"
+            className="mb-8 inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 transition-colors hover:text-gray-900 dark:hover:text-white"
           >
             <ArrowLeft size={20} />
             <span>Back to Portfolio</span>
@@ -69,12 +69,12 @@ export default function PrintMediaPage() {
           <h1 className="mb-6 text-4xl font-bold md:text-6xl">
             Print Media Design
           </h1>
-          <p className="max-w-3xl text-lg text-gray-300 md:text-xl mb-12">
-            Beautifully precise printable designs including brochures, flyers, business cards, and outdoor marketing hoardings tailored for physical layouts.
+          <p className="max-w-3xl text-lg text-gray-700 dark:text-gray-300 md:text-xl mb-12">
+            Premium, typography-focused print-ready layouts designed to leave a lasting tactile impression and elevate real-world marketing.
           </p>
         </motion.div>
 
-        <ImageGallery images={PRINT_MEDIA} aspectRatio="aspect-[3/4]" objectFit="object-cover" />
+        <ImageGallery images={PRINT_MEDIA} aspectRatio="aspect-[3/4]" objectFit="object-contain" />
       </div>
     </main>
   );

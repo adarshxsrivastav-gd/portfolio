@@ -26,7 +26,7 @@ export function ImageGallery({ images, aspectRatio = "aspect-[4/3]", objectFit =
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.1, duration: 0.5 }}
-            className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/10 h-full w-full"
+            className="group relative cursor-pointer overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 h-full w-full"
             onClick={() => setSelectedImage(img.src)}
           >
             <CardContainer className="h-full w-full" containerClassName="h-full w-full p-0">
@@ -50,7 +50,7 @@ export function ImageGallery({ images, aspectRatio = "aspect-[4/3]", objectFit =
                       className={`${objectFit} transition-transform duration-500 group-hover:scale-105`}
                     />
                     <div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-end p-6">
-                      <CardItem translateZ="80" as="h4" className="text-xl font-semibold text-white drop-shadow-md">
+                      <CardItem translateZ="80" as="h4" className="text-xl font-semibold text-gray-900 dark:text-white drop-shadow-md">
                         {img.title}
                       </CardItem>
                     </div>
@@ -81,7 +81,7 @@ export function ImageGallery({ images, aspectRatio = "aspect-[4/3]", objectFit =
             >
               <button
                 onClick={() => setSelectedImage(null)}
-                className="absolute -top-12 right-0 rounded-full bg-white/10 p-2 text-white hover:bg-white/20 transition-colors"
+                className="absolute -top-12 right-0 rounded-full bg-black/10 dark:bg-white/10 p-2 text-gray-900 dark:text-white hover:bg-black/20 dark:bg-white/20 transition-colors"
                 aria-label="Close"
               >
                 <X size={24} />

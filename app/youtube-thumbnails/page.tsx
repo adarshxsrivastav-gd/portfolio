@@ -7,6 +7,16 @@ import { ImageGallery } from "@/components/ImageGallery";
 
 const YOUTUBE_THUMBNAILS = [
   {
+    src: "/images/yt_thumb_1.jpg",
+    alt: "Stop Wasting Years Major General Blueprint Thumbnail",
+    title: "Officer Career Blueprint",
+  },
+  {
+    src: "/images/yt_thumb_2.jpg",
+    alt: "Bonding Beyond Classrooms Student Life Vlog Thumbnail",
+    title: "Academy Life Cinematic",
+  },
+  {
     src: "/images/media__1773560314641.jpg",
     alt: "Decoding Tejas Fighter Jet Analysis Thumbnail",
     title: "Tejas Jet Analysis",
@@ -45,7 +55,7 @@ const YOUTUBE_THUMBNAILS = [
 
 export default function YouTubeThumbnailsPage() {
   return (
-    <main className="min-h-screen bg-[#121212] text-white">
+    <main className="min-h-screen bg-transparent">
       <div className="mx-auto max-w-7xl px-8 py-24 md:px-24">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -53,8 +63,8 @@ export default function YouTubeThumbnailsPage() {
           transition={{ duration: 0.5 }}
         >
           <Link
-            href="/"
-            className="mb-8 inline-flex items-center gap-2 text-gray-400 transition-colors hover:text-white"
+            href="/#design-expertise"
+            className="mb-8 inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 transition-colors hover:text-gray-900 dark:hover:text-white"
           >
             <ArrowLeft size={20} />
             <span>Back to Portfolio</span>
@@ -69,10 +79,8 @@ export default function YouTubeThumbnailsPage() {
           <h1 className="mb-6 text-4xl font-bold md:text-6xl">
             YouTube Thumbnails
           </h1>
-          <p className="max-w-3xl text-lg text-gray-300 md:text-xl">
-            A showcase of high-converting, visually engaging YouTube thumbnails. 
-            Each design is strategically crafted to maximize Click-Through Rate (CTR), 
-            capture viewer attention, and clearly communicate the core message of the video.
+          <p className="max-w-3xl text-lg text-gray-700 dark:text-gray-300 md:text-xl mb-12">
+            High-CTR, click-optimized thumbnail layouts built strategically to capture viewer attention and drive massive channel growth.
           </p>
         </motion.div>
 

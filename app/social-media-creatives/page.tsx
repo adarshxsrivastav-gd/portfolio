@@ -6,131 +6,165 @@ import { ArrowLeft } from "lucide-react";
 import { ImageGallery } from "@/components/ImageGallery";
 
 const SOCIAL_MEDIA_IMAGES = [
+  // TIER 1 - Maximum Impact: UI Mockups & Modern App Designs
   {
-    src: "/images/media__1773255387478.jpg",
-    alt: "Defense Academy Uniform Campaign",
-    title: "Uniform Motivation Campaign",
+    src: "/images/centurion_app.jpg",
+    alt: "Centurion Defence Academy App Dashboard Complete",
+    title: "App Download Campaign",
   },
   {
-    src: "/images/media__1773255388246.jpg",
-    alt: "Defense Academy Physical Training Layout",
-    title: "Physical Training Showcase",
-  },
-  {
-    src: "/images/media__1773255390396.jpg",
-    alt: "NDA Mock Test Promotional Creative",
-    title: "Mock Test Promotional Design",
-  },
-  {
-    src: "/images/media__1773255390669.jpg",
-    alt: "Indian Air Force Day Creative",
-    title: "Air Force Day Celebration",
-  },
-  {
-    src: "/images/media__1773255391027.jpg",
-    alt: "New Year Defense Academy Sale Ad",
-    title: "New Year Sale Activation",
-  },
-  {
-    src: "/images/social_media_creative_1_1773251424221.png",
-    alt: "Centurion Digital Learning App Features",
-    title: "Digital Learning App Showcase",
-  },
-  {
-    src: "/images/social_media_creative_2_1773251443148.png",
-    alt: "NDA Crack Kit Book Combo",
-    title: "NDA Crack Kit Preparation",
-  },
-  {
-    src: "/images/social_media_creative_3_1773251460500.png",
-    alt: "Student Portal Mobile App Interface",
-    title: "Student Portal Mobile App",
-  },
-  {
-    src: "/images/social_media_creative_4_1773251475375.png",
-    alt: "Defence Exam Prep All-in-One Portal",
-    title: "All-in-One Prep Portal",
-  },
-  {
-    src: "/images/portfolio_creative_1.jpg",
-    alt: "All-in-One Defence Exam Portal Mockup",
-    title: "Defence Platform Interface",
-  },
-  {
-    src: "/images/portfolio_creative_2.png",
-    alt: "Student Success Testimonials Post",
-    title: "Academy Success Stories",
-  },
-  {
-    src: "/images/portfolio_creative_3.jpg",
-    alt: "Online Crash Course App View",
-    title: "Digital Learning Campaign",
-  },
-  {
-    src: "/images/portfolio_creative_4.jpg",
-    alt: "Offline Batch Launch Classroom Creative",
-    title: "Classroom Training Promotion",
-  },
-  {
-    src: "/images/portfolio_creative_5.jpg",
-    alt: "Comprehensive Prep App Multi-device",
-    title: "Multi-Platform App Showcase",
-  },
-  {
-    src: "/images/portfolio_creative_6.jpg",
-    alt: "Defence Academy Shudh Ghee Product Focus",
-    title: "Shudh Ghee Product Shot",
-  },
-  {
-    src: "/images/portfolio_creative_7.jpg",
-    alt: "Defence Academy Offline Crash Course Promotion",
-    title: "Offline Crash Course Promo",
+    src: "/images/mock_test.jpg",
+    alt: "All India Mock Test Scholarship 3D Typography",
+    title: "Mock Test Scholarship Banner",
   },
   {
     src: "/images/portfolio_creative_8.jpg",
     alt: "Centurion Defence Academy App Dashboard",
-    title: "Digital App Dashboard",
+    title: "App Dashboard Showcase",
   },
   {
-    src: "/images/portfolio_creative_9.jpg",
-    alt: "Desi Ghee Family Traditional Breakfast",
-    title: "Family Tradition Lifestyle",
+    src: "/images/portfolio_creative_1.jpg",
+    alt: "All-in-One Defence Exam Portal Mockup",
+    title: "Platform UI Showcase",
   },
   {
-    src: "/images/portfolio_creative_10.jpg",
-    alt: "Desi Ghee Bilona Process Description",
-    title: "Bilona Process Infographic",
-  },
-  {
-    src: "/images/portfolio_creative_11.jpg",
-    alt: "NDA Jaguar Features Promotion",
-    title: "NDA Jaguar Features",
+    src: "/images/portfolio_creative_5.jpg",
+    alt: "Comprehensive Prep App Multi-device",
+    title: "Multi-Platform App Intro",
   },
   {
     src: "/images/portfolio_creative_12.jpg",
     alt: "Centurion Digital App Multi-device preview",
-    title: "Digital App Multi-Device",
+    title: "Device Mockup Creative",
+  },
+  
+  // TIER 2 - High Fidelity 3D Product Mockups
+  {
+    src: "/images/media__1773943477865.png",
+    alt: "Orancia Herbal Hair Oil Front Product View",
+    title: "Product Showcase Design",
+  },
+  {
+    src: "/images/media__1773943477825.png",
+    alt: "Why Choose Orancia Hair Oil Value Poster",
+    title: "Brand Value Promotion",
+  },
+  {
+    src: "/images/media__1773943553985.jpg",
+    alt: "Orancia Body Wash Stones Outdoor Concept",
+    title: "Outdoor Product Campaign",
+  },
+  {
+    src: "/images/media__1773943553965.jpg",
+    alt: "Orancia Body Wash Pink Platform Studio",
+    title: "Studio Product Promo",
+  },
+  {
+    src: "/images/portfolio_creative_6.jpg",
+    alt: "Defence Academy Shudh Ghee Product Focus",
+    title: "Product Highlight Banner",
+  },
+  {
+    src: "/images/media__1773943477725.png",
+    alt: "Orancia Key Ingredients Educational Map",
+    title: "Ingredient Infographic Post",
+  },
+  
+  // TIER 3 - Strong Graphics & Infographics Context
+  {
+    src: "/images/portfolio_creative_9.jpg",
+    alt: "Desi Ghee Family Traditional Breakfast",
+    title: "Lifestyle Branding Creative",
+  },
+  {
+    src: "/images/portfolio_creative_11.jpg",
+    alt: "NDA Jaguar Features Promotion",
+    title: "Feature Highlight Banner",
+  },
+  {
+    src: "/images/media__1773943013451.jpg",
+    alt: "Centurion Digital App Launch Campaign",
+    title: "App Launch Campaign",
   },
   {
     src: "/images/portfolio_creative_13.jpg",
     alt: "Territorial Army 2025 Mobile Mockup",
-    title: "Territorial Army Campaign",
+    title: "Recruitment Ad Campaign",
+  },
+  {
+    src: "/images/media__1773943013359.jpg",
+    alt: "Navratri Defense Academy Festive Branding",
+    title: "Festive Brand Awareness",
   },
   {
     src: "/images/portfolio_creative_14.jpg",
     alt: "Multi Layer Defence In Action Infographic",
-    title: "Missile Defence Infographic",
+    title: "Defense Infographic Post",
+  },
+  {
+    src: "/images/portfolio_creative_10.jpg",
+    alt: "Desi Ghee Bilona Process Description",
+    title: "Educational Infographic Post",
+  },
+  
+  // TIER 4 - Standard Marketing, Testimonials & Ads
+  {
+    src: "/images/portfolio_creative_2.png",
+    alt: "Student Success Testimonials Post",
+    title: "Student Success Testimonial",
+  },
+  {
+    src: "/images/media__1773255390396.jpg",
+    alt: "NDA Mock Test Promotional Creative",
+    title: "Exam Prep Promotion",
+  },
+  {
+    src: "/images/portfolio_creative_3.jpg",
+    alt: "Online Crash Course App View",
+    title: "Online Course Promotion",
+  },
+  {
+    src: "/images/media__1773255391027.jpg",
+    alt: "New Year Defense Academy Sale Ad",
+    title: "Festive Sale Creative",
+  },
+  {
+    src: "/images/media__1773255390669.jpg",
+    alt: "Indian Air Force Day Creative",
+    title: "Event Awareness Design",
   },
   {
     src: "/images/portfolio_creative_15.jpg",
     alt: "Favourite Defence Coach Promotion",
-    title: "Defence Coach Promotion",
+    title: "Instructor Profile Banner",
+  },
+  
+  // TIER 5 - Basic Photography & Clean Layouts 
+  {
+    src: "/images/media__1773255387478.jpg",
+    alt: "Defense Academy Uniform Campaign",
+    title: "Motivational Branding Post",
+  },
+  {
+    src: "/images/media__1773255388246.jpg",
+    alt: "Defense Academy Physical Training Layout",
+    title: "Training Awareness Campaign",
+  },
+  {
+    src: "/images/portfolio_creative_4.jpg",
+    alt: "Offline Batch Launch Classroom Creative",
+    title: "Classroom Training Ad",
+  },
+  {
+    src: "/images/portfolio_creative_7.jpg",
+    alt: "Defence Academy Offline Crash Course Promotion",
+    title: "Crash Course Promotion",
   },
 ];
 
 export default function SocialMediaCreativesPage() {
   return (
-    <main className="min-h-screen bg-[#121212] text-white">
+    <main className="min-h-screen bg-transparent">
       <div className="mx-auto max-w-7xl px-8 py-24 md:px-24">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -138,8 +172,8 @@ export default function SocialMediaCreativesPage() {
           transition={{ duration: 0.5 }}
         >
           <Link
-            href="/"
-            className="mb-8 inline-flex items-center gap-2 text-gray-400 transition-colors hover:text-white"
+            href="/#design-expertise"
+            className="mb-8 inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 transition-colors hover:text-gray-900 dark:hover:text-white"
           >
             <ArrowLeft size={20} />
             <span>Back to Portfolio</span>
@@ -154,15 +188,12 @@ export default function SocialMediaCreativesPage() {
           <h1 className="mb-6 text-4xl font-bold md:text-6xl">
             Social Media Creatives
           </h1>
-          <p className="max-w-3xl text-lg text-gray-300 md:text-xl">
-            A showcase of my expertise in designing engaging social media posts,
-            vibrant Instagram creatives, eye-catching YouTube thumbnails, and
-            conversion-focused digital marketing visuals. Each piece is crafted
-            to capture attention instantly and leave a lasting impression.
+          <p className="max-w-3xl text-lg text-gray-700 dark:text-gray-300 md:text-xl mb-12">
+            Data-driven visuals designed to maximize audience engagement and rapidly scale brand presence across social platforms.
           </p>
         </motion.div>
 
-        <ImageGallery images={SOCIAL_MEDIA_IMAGES} />
+        <ImageGallery images={SOCIAL_MEDIA_IMAGES} aspectRatio="aspect-square" objectFit="object-contain" />
       </div>
     </main>
   );

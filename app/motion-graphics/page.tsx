@@ -20,7 +20,7 @@ const MOTION_GRAPHICS = [
 
 export default function MotionGraphicsPage() {
   return (
-    <main className="min-h-screen bg-[#121212] text-white">
+    <main className="min-h-screen bg-transparent">
       <div className="mx-auto max-w-7xl px-8 py-24 md:px-24">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -28,8 +28,8 @@ export default function MotionGraphicsPage() {
           transition={{ duration: 0.5 }}
         >
           <Link
-            href="/"
-            className="mb-8 inline-flex items-center gap-2 text-gray-400 transition-colors hover:text-white"
+            href="/#design-expertise"
+            className="mb-8 inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 transition-colors hover:text-gray-900 dark:hover:text-white"
           >
             <ArrowLeft size={20} />
             <span>Back to Portfolio</span>
@@ -44,12 +44,12 @@ export default function MotionGraphicsPage() {
           <h1 className="mb-6 text-4xl font-bold md:text-6xl">
             Motion Graphics
           </h1>
-          <p className="max-w-3xl text-lg text-gray-300 md:text-xl mb-12">
-            Breathtaking and dynamic motion graphics designed for powerful storytelling, engaging social media presence, and advanced video editing compositions.
+          <p className="max-w-3xl text-lg text-gray-700 dark:text-gray-300 md:text-xl mb-12">
+            Dynamic motion graphics and seamless video edits that transform static ideas into captivating, immersive visual stories.
           </p>
         </motion.div>
 
-        <ImageGallery images={MOTION_GRAPHICS} />
+        <ImageGallery images={MOTION_GRAPHICS} aspectRatio="aspect-video" objectFit="object-contain" />
       </div>
     </main>
   );
