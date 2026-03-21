@@ -71,38 +71,39 @@ const AntigravityIcon = () => (
 );
 
 const AI_TOOLS = [
-  { id: 1, name: "Gemini", icon: <GeminiIcon /> },
-  { id: 2, name: "ChatGPT", icon: <ChatGPTIcon /> },
-  { id: 3, name: "Claude", icon: <ClaudeIcon /> },
-  { id: 4, name: "Google Antigravity", icon: <AntigravityIcon /> },
-  { id: 5, name: "NotebookLM", icon: <NotebookLMIcon /> },
-  { id: 6, name: "Perplexity", icon: <PerplexityIcon /> },
-  { id: 7, name: "Grok", icon: <GrokIcon /> },
-  { id: 8, name: "LoveArt", icon: <LoveArtIcon /> },
+  { id: 1, name: "Gemini", description: "Research, ideation and content references", icon: <GeminiIcon /> },
+  { id: 2, name: "ChatGPT", description: "Copywriting, brainstorming and prompt crafting", icon: <ChatGPTIcon /> },
+  { id: 3, name: "Claude", description: "Problem solving and creative feedback", icon: <ClaudeIcon /> },
+  { id: 4, name: "Google Antigravity", description: "Building and managing my portfolio website", icon: <AntigravityIcon /> },
+  { id: 5, name: "NotebookLM", description: "Organizing research and project notes", icon: <NotebookLMIcon /> },
+  { id: 6, name: "Perplexity", description: "Quick fact checking and web research", icon: <PerplexityIcon /> },
+  { id: 7, name: "Grok", description: "Trend analysis and creative exploration", icon: <GrokIcon /> },
+  { id: 8, name: "LoveArt", description: "AI image generation for visual concepts", icon: <LoveArtIcon /> },
 ];
 
 export default function AIToolkit() {
   return (
-    <section id="ai-toolkit" className="relative z-10 bg-gray-50 transition-colors duration-300 dark:bg-[#121212] px-8 py-6 text-gray-900 dark:text-white md:px-24">
+    <section id="ai-toolkit" className="relative z-10 bg-gray-50 transition-colors duration-300 dark:bg-[#121212] px-8 py-20 text-gray-900 dark:text-white md:px-24">
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
+          className="mb-12"
         >
-          <h3 className="mb-6 text-2xl font-bold md:text-4xl">AI Toolkit & Creative Stack</h3>
+          <h3 className="mb-6 text-3xl font-bold md:text-5xl">AI Toolkit & Creative Stack</h3>
         </motion.div>
         
-        <div className="flex w-full snap-x snap-mandatory gap-2 overflow-x-auto pb-4 sm:gap-3 lg:justify-center lg:overflow-visible lg:pb-0 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
           {AI_TOOLS.map((item, i) => (
             <motion.div
               key={item.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: i * 0.1, duration: 0.6, ease: "easeOut" }}
-              className="group relative flex h-full min-h-[85px] w-[80px] shrink-0 snap-center flex-col items-center justify-center rounded-xl border border-black/10 bg-black/5 p-3 backdrop-blur-md transition-all duration-300 hover:z-10 hover:-translate-y-1 hover:scale-[1.08] hover:bg-black/10 hover:shadow-xl hover:shadow-black/20 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10 dark:hover:shadow-white/10 sm:w-[90px] md:w-[95px] lg:w-auto lg:min-w-[100px]"
+              transition={{ delay: i * 0.08, duration: 0.5, ease: "easeOut" }}
+              className="group relative flex flex-col justify-start overflow-hidden rounded-xl border border-cyan-500/30 bg-gray-900 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/50 hover:bg-gray-800 hover:shadow-[0_8px_30px_rgba(6,182,212,0.15)] dark:bg-white/5 dark:hover:bg-white/10"
             >
               <GlowingEffect
                 blur={0}
@@ -114,13 +115,16 @@ export default function AIToolkit() {
                 inactiveZone={0.01}
                 className="absolute inset-0 z-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
               />
-              <div className="relative z-10 flex flex-col items-center gap-3 transition-transform duration-300">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white dark:bg-[#1e1e1e] shadow-sm border border-black/5 dark:border-white/5">
+              <div className="relative z-10">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-black/40 text-white shadow-sm transition-transform duration-300 group-hover:scale-110">
                   {item.icon}
                 </div>
-                <h4 className="text-center text-[10px] sm:text-xs font-semibold tracking-wide text-gray-900 dark:text-white leading-tight">
+                <h4 className="mb-2 text-xl font-bold text-white transition-colors group-hover:text-cyan-400">
                   {item.name}
                 </h4>
+                <p className="text-sm leading-relaxed text-gray-400 transition-colors group-hover:text-gray-300">
+                  {item.description}
+                </p>
               </div>
             </motion.div>
           ))}

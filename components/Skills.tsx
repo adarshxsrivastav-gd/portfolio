@@ -47,26 +47,29 @@ export default function Skills() {
   return (
     <section className="relative z-10 bg-gray-50 transition-colors duration-300 dark:bg-[#121212] px-8 py-20 text-gray-900 dark:text-white md:px-24">
       <div className="mx-auto max-w-7xl">
-        <h3 className="mb-12 text-3xl font-bold md:text-5xl">Skills & Proficiencies</h3>
-        
+        <h3 className="mb-12 text-3xl font-bold md:text-5xl">
+          Skills & Proficiencies
+        </h3>
+
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-24">
           {/* Hard Skills */}
           <div>
-            <h4 className="mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-300">Hard Skills</h4>
+            <h4 className="mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-300">
+              Hard Skills
+            </h4>
             <div className="space-y-6">
               {HARD_SKILLS.map((skill, index) => (
-                <div 
-                  key={skill.name} 
+                <div
+                  key={skill.name}
                   className="group relative overflow-hidden rounded-2xl border border-black/5 dark:border-white/10 bg-white/40 dark:bg-white/5 p-5 transition-all duration-300 hover:border-black/20 dark:hover:border-white/30 hover:bg-white dark:hover:bg-white/10 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
                 >
                   <div className="mb-3 flex items-center justify-between text-sm">
                     <div className="flex items-center gap-4">
-                      
                       <div className="relative flex h-8 w-8 items-center justify-center">
                         {/* Soft Glow Effect */}
-                        <div 
-                          className="absolute inset-0 rounded-full blur-md transition-opacity duration-300 group-hover:opacity-100 opacity-60" 
-                          style={{ backgroundColor: skill.glow }} 
+                        <div
+                          className="absolute inset-0 rounded-full blur-md transition-opacity duration-300 group-hover:opacity-100 opacity-60"
+                          style={{ backgroundColor: skill.glow }}
                         />
                         {/* Official React Icon Logo */}
                         <div className="relative z-10 drop-shadow-md transition-transform duration-300 group-hover:scale-110">
@@ -74,17 +77,21 @@ export default function Skills() {
                         </div>
                       </div>
 
-                      <span className="font-medium text-base">{skill.name}</span>
+                      <span className="font-medium text-base text-gray-900 dark:text-white">
+                        {skill.name}
+                      </span>
                     </div>
-                    <span className="text-gray-600 dark:text-gray-400">{skill.level}%</span>
+                    <span className="font-bold text-gray-900 dark:text-white">
+                      {skill.level}%
+                    </span>
                   </div>
-                  <div className="h-2 w-full overflow-hidden rounded-full bg-black/10 dark:bg-white/10">
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-[#e0e0e0] dark:bg-[#2a2a2a]">
                     <motion.div
                       initial={{ width: 0 }}
                       whileInView={{ width: `${skill.level}%` }}
                       viewport={{ once: true }}
                       transition={{ duration: 1, delay: index * 0.1 }}
-                      className="h-full bg-white text-gray-900"
+                      className="h-full bg-[#00BCD4]"
                     />
                   </div>
                 </div>
@@ -95,7 +102,9 @@ export default function Skills() {
           <div className="space-y-12">
             {/* Soft Skills */}
             <div>
-              <h4 className="mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-300">Soft Skills</h4>
+              <h4 className="mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-300">
+                Soft Skills
+              </h4>
               <div className="flex flex-wrap gap-4">
                 {SOFT_SKILLS.map((skill, index) => (
                   <motion.div
@@ -104,7 +113,7 @@ export default function Skills() {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="rounded-full border border-black/20 dark:border-white/20 bg-black/5 dark:bg-white/5 px-6 py-2 text-sm backdrop-blur-md"
+                    className="rounded-full border border-cyan-500/50 bg-gray-900 px-6 py-2 text-sm text-white backdrop-blur-md dark:bg-white/5"
                   >
                     {skill}
                   </motion.div>
@@ -114,39 +123,40 @@ export default function Skills() {
 
             {/* Languages */}
             <div>
-              <h4 className="mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-300">Languages</h4>
-              <div className="space-y-6">
+              <h4 className="mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-300">
+                Languages
+              </h4>
+              <div className="flex flex-wrap gap-4">
                 {LANGUAGES.map((lang, index) => (
-                  <div key={lang.name}>
-                    <div className="mb-2 flex justify-between text-sm">
-                      <span>{lang.name}</span>
-                      <span className="text-gray-600 dark:text-gray-400">{lang.level}%</span>
-                    </div>
-                    <div className="h-2 w-full overflow-hidden rounded-full bg-black/10 dark:bg-white/10">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${lang.level}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, delay: index * 0.1 }}
-                        className="h-full bg-gray-400"
-                      />
-                    </div>
-                  </div>
+                  <motion.div
+                    key={lang.name}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="rounded-full border border-cyan-500/50 bg-gray-900 px-6 py-2 text-sm text-white backdrop-blur-md dark:bg-white/5"
+                  >
+                    {lang.name}
+                  </motion.div>
                 ))}
               </div>
             </div>
-            
+
             {/* Awards */}
             <div>
-              <h4 className="mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-300">Awards</h4>
+              <h4 className="mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-300">
+                Awards
+              </h4>
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-6 backdrop-blur-sm"
+                className="rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-6 backdrop-blur-sm max-w-lg"
               >
                 <h5 className="text-xl font-bold">MR. UP-UK 2K19</h5>
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">V.V.N Enterprises • Kanpur • 2019</p>
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                  V.V.N Enterprises • Kanpur • 2019
+                </p>
               </motion.div>
             </div>
           </div>

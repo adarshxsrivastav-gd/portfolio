@@ -27,10 +27,10 @@ export default function Overlay() {
           {activeSection === "name" && (
             <motion.div
               key="name"
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 1, ease: "easeInOut" }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
               className="absolute inset-0 flex flex-col items-center justify-center text-center text-gray-900 dark:text-white"
             >
               <h1 className="text-5xl font-bold tracking-tight md:text-7xl">

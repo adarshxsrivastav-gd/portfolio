@@ -7,10 +7,10 @@ export default function About() {
     <section className="relative z-10 bg-gray-50 text-gray-900 transition-colors duration-300 dark:bg-[#121212] dark:text-white px-8 py-20 md:px-24">
       <div className="mx-auto max-w-4xl text-center">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <h3 className="mb-8 text-3xl font-bold md:text-5xl">About Me</h3>
           <p className="text-xl leading-relaxed text-gray-700 dark:text-gray-300 md:text-2xl">

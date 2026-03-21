@@ -97,10 +97,78 @@ export default function Contact() {
           ))}
         </div>
         
-        <div className="flex flex-col md:flex-row items-center justify-between border-t border-black/10 dark:border-white/10 pt-8 text-sm font-medium text-gray-500 dark:text-gray-500">
-          <p>© {new Date().getFullYear()} Adarsh Srivastav.</p>
-          <p className="mt-2 md:mt-0 uppercase tracking-widest text-xs">Graphic Designer • Video Editor</p>
-        </div>
+        {/* Modern 3-Column Footer */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="border-t border-black/10 dark:border-white/10 pt-16 mt-8"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16 text-center md:text-left">
+            
+            {/* Column 1: Brand */}
+            <div className="flex flex-col items-center md:items-start">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Adarsh Srivastav</h3>
+              <p className="text-cyan-600 dark:text-cyan-400 text-sm mb-4">Graphic Designer & Video Editor</p>
+              <p className="text-gray-500 dark:text-gray-400 text-sm">Open for Freelance & Full-Time opportunities</p>
+            </div>
+
+            {/* Column 2: Quick Links */}
+            <div className="flex flex-col items-center md:items-start">
+              <h4 className="text-xs font-bold uppercase tracking-widest text-cyan-600 dark:text-cyan-400 mb-6">Quick Links</h4>
+              <nav className="flex flex-col space-y-3">
+                {["About", "Experience", "Skills", "Design Expertise", "Contact"].map((link) => (
+                  <a
+                    key={link}
+                    href={`#${link.toLowerCase().replace(" ", "-")}`}
+                    className="text-gray-900 dark:text-white hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors text-sm"
+                  >
+                    {link}
+                  </a>
+                ))}
+              </nav>
+            </div>
+
+            {/* Column 3: Connect With Me */}
+            <div className="flex flex-col items-center md:items-start">
+              <h4 className="text-xs font-bold uppercase tracking-widest text-cyan-600 dark:text-cyan-400 mb-6">Connect With Me</h4>
+              <div className="flex items-center gap-4">
+                <a
+                  href="mailto:adarshxsrivastav@gmail.com"
+                  className="group flex h-12 w-12 items-center justify-center rounded-full bg-gray-900 dark:bg-white/5 border border-cyan-500/30 transition-all duration-300 hover:border-cyan-400/80 hover:shadow-[0_0_15px_rgba(6,182,212,0.5)]"
+                  aria-label="Email"
+                >
+                  <Mail className="h-5 w-5 text-white group-hover:text-cyan-400 transition-colors" />
+                </a>
+                <a
+                  href="https://wa.me/917270871614"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex h-12 w-12 items-center justify-center rounded-full bg-gray-900 dark:bg-white/5 border border-cyan-500/30 transition-all duration-300 hover:border-cyan-400/80 hover:shadow-[0_0_15px_rgba(6,182,212,0.5)]"
+                  aria-label="WhatsApp"
+                >
+                  <Phone className="h-5 w-5 text-white group-hover:text-cyan-400 transition-colors" />
+                </a>
+                <a
+                  href="https://www.behance.net/gallery/246104735/Motions-Video"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex h-12 w-12 items-center justify-center rounded-full bg-gray-900 dark:bg-white/5 border border-cyan-500/30 transition-all duration-300 hover:border-cyan-400/80 hover:shadow-[0_0_15px_rgba(6,182,212,0.5)]"
+                  aria-label="Behance"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 text-white group-hover:text-cyan-400 transition-colors">
+                    <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14h-8.027c.13 3.211 3.483 3.312 4.588 2.029h3.168zm-7.686-4h4.965c-.105-1.547-1.136-2.219-2.477-2.219-1.466 0-2.277.768-2.488 2.219zm-9.574 6.988h-6.466v-14.967h6.953c5.476.081 5.58 5.444 2.72 6.906 3.461 1.26 3.577 8.061-3.207 8.061zm-3.466-8.988h3.584c2.508 0 2.906-3-.312-3h-3.272v3zm3.391 3h-3.391v3.016h3.341c3.055 0 2.868-3.016.05-3.016z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div className="border-t border-black/10 dark:border-white/10 pt-8 text-center">
+            <p className="text-xs text-gray-500 dark:text-gray-500">© 2026 Adarsh Srivastav. All Rights Reserved.</p>
+          </div>
+        </motion.div>
       </div>
     </footer>
   );
