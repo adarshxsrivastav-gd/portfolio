@@ -7,6 +7,16 @@ import { ImageGallery } from "@/components/ImageGallery";
 
 const YOUTUBE_THUMBNAILS = [
   {
+    src: "/images/yt_custom_new_1.jpg",
+    alt: "NDA Girls Intensive Field Training Day Thumbnail",
+    title: "NDA Girls Intensive Field Day",
+  },
+  {
+    src: "/images/yt_custom_new_2.jpg",
+    alt: "SSB Interview Process Confessions Exposed Thumbnail",
+    title: "SSB Interview Secrets Exposed",
+  },
+  {
     src: "/images/yt_thumb_1.jpg",
     alt: "Stop Wasting Years Major General Blueprint Thumbnail",
     title: "Officer Career Blueprint",

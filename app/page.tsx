@@ -6,6 +6,7 @@ import Skills from "@/components/Skills";
 import AIToolkit from "@/components/AIToolkit";
 import About from "@/components/About";
 import Contact from "@/components/Contact";
+import Stats from "@/components/Stats";
 
 export default function Home() {
   return (
@@ -15,6 +16,8 @@ export default function Home() {
         {/* Overlay is fixed to viewport and controls its own opacity based on scroll */}
         <Overlay />
       </div>
+      
+      <Stats />
       
       {/* CV Content Sections */}
       <About />

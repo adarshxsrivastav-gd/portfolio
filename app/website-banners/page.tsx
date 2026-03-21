@@ -7,15 +7,15 @@ import { ImageGallery } from "@/components/ImageGallery";
 
 const WEBSITE_BANNERS = [
   {
-    src: "/images/media__1773555643427.jpg",
-    alt: "Placeholder Banner 1",
-    title: "Homepage Hero Banner",
+    src: "/images/media__1774126151975.png",
+    alt: "Defence Academy Admissions Campaign Banner",
+    title: "Admissions Campaign Header",
   },
   {
-    src: "/images/media__1773555643550.jpg",
-    alt: "Placeholder Banner 2",
-    title: "Promotional Banner Design",
-  },
+    src: "/images/media__1774126168812.png",
+    alt: "Centurion Digital App Launch Promo Banner",
+    title: "App Download Hero Banner",
+  }
 ];
 
 export default function WebsiteBannersPage() {
