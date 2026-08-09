@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 
 const ChatGPTIcon = () => (
@@ -24,14 +25,12 @@ const GeminiIcon = () => (
 
 const ClaudeIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 text-[#D97757]">
-    {/* Anthropic / Claude Star Approximation */}
     <path d="M12 0l2.5 8.5H24l-7.5 5.2 2.7 8.3L12 16.2 6.8 22l2.7-8.3L2 8.5h9.5L12 0z" />
   </svg>
 );
 
 const PerplexityIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 text-emerald-600 dark:text-emerald-400">
-    {/* A generic grid interlocking minimal pattern to simulate Perplexity */}
     <path d="M4 4h4v4H4V4zm6 0h4v4h-4V4zm6 0h4v4h-4V4zM4 10h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4zM4 16h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4z" />
     <rect x="2" y="2" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" />
   </svg>
@@ -52,7 +51,6 @@ const GrokIcon = () => (
 
 const LoveArtIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 text-pink-500">
-    {/* Stylized Heart with brush/stars */}
     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
     <circle cx="16" cy="7" r="1.5" fill="white" />
     <path d="M15 5h2v2h-2z" fill="white" />
@@ -61,12 +59,25 @@ const LoveArtIcon = () => (
 
 const AntigravityIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-indigo-500 drop-shadow-md">
-    {/* Clean stylized 'G' combined with arrows pointing outwards representing Antigravity */}
     <path d="M21 12A9 9 0 1 1 12 3c2.4 0 4.6 1 6.1 2.6" />
     <path d="M12 12h8" />
     <path d="M12 12L12 3" />
     <path d="M10 2L14 6L10 10" />
     <circle cx="12" cy="12" r="3" fill="currentColor" />
+  </svg>
+);
+
+const GoogleFlowIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-cyan-400">
+    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+  </svg>
+);
+
+const GooglePomelliIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-purple-400">
+    <polygon points="12 2 2 7 12 12 22 7 12 2" />
+    <polyline points="2 17 12 22 22 17" />
+    <polyline points="2 12 12 17 22 12" />
   </svg>
 );
 
@@ -79,31 +90,113 @@ const AI_TOOLS = [
   { id: 6, name: "Perplexity", description: "Quick fact checking and web research", icon: <PerplexityIcon /> },
   { id: 7, name: "Grok", description: "Trend analysis and creative exploration", icon: <GrokIcon /> },
   { id: 8, name: "LoveArt", description: "AI image generation for visual concepts", icon: <LoveArtIcon /> },
+  { id: 9, name: "Google Flow", description: "Prompt-to-workflow automation & creative asset pipelines", icon: <GoogleFlowIcon /> },
+  { id: 10, name: "Google Pomelli", description: "AI brand asset generation & visual identity management", icon: <GooglePomelliIcon /> },
 ];
 
 export default function AIToolkit() {
+  const marqueeTools = [...AI_TOOLS, ...AI_TOOLS, ...AI_TOOLS, ...AI_TOOLS];
+  const containerRef = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+
+  const [isDragging, setIsDragging] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  const startXRef = useRef(0);
+  const startMotionXRef = useRef(0);
+
+  // Single set of 10 items width: (300px card width + 24px gap) * 10 = 3240px
+  const singleSetWidth = 3240;
+  const speed = 45; // pixels per second
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduceMotion(mediaQuery.matches);
+    const handleChange = (e: MediaQueryListEvent) => setReduceMotion(e.matches);
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
+  useAnimationFrame((_, delta) => {
+    if (!isDragging && !isHovered && !reduceMotion) {
+      let currentX = x.get() - speed * (delta / 1000);
+      if (currentX <= -singleSetWidth) {
+        currentX += singleSetWidth;
+      }
+      x.set(currentX);
+    }
+  });
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    setIsDragging(true);
+    startXRef.current = e.clientX;
+    startMotionXRef.current = x.get();
+    try {
+      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    } catch {}
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!isDragging) return;
+    const deltaX = e.clientX - startXRef.current;
+    let currentX = startMotionXRef.current + deltaX;
+
+    while (currentX <= -singleSetWidth * 2) {
+      currentX += singleSetWidth;
+    }
+    while (currentX >= 0) {
+      currentX -= singleSetWidth;
+    }
+
+    x.set(currentX);
+  };
+
+  const handlePointerUp = (e: React.PointerEvent) => {
+    if (isDragging) {
+      setIsDragging(false);
+      try {
+        (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+      } catch {}
+    }
+  };
+
   return (
-    <section id="ai-toolkit" className="relative z-10 bg-gray-50 transition-colors duration-300 dark:bg-[#121212] px-8 py-20 text-gray-900 dark:text-white md:px-24">
-      <div className="mx-auto max-w-7xl">
+    <section id="ai-toolkit" className="relative z-10 bg-gray-50 transition-colors duration-300 dark:bg-[#121212] py-20 text-gray-900 dark:text-white overflow-hidden">
+      <div className="mx-auto max-w-7xl px-8 md:px-24 mb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-12"
         >
-          <h3 className="mb-6 text-3xl font-bold md:text-5xl">AI Toolkit & Creative Stack</h3>
+          <h3 className="text-3xl font-bold md:text-5xl">AI Toolkit & Creative Stack</h3>
         </motion.div>
+      </div>
+
+      {/* Interactive Endless Marquee Container */}
+      <div className="relative w-full overflow-hidden py-4">
+        {/* Left edge fade gradient */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-gray-50 dark:from-[#121212] to-transparent z-20" />
         
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-          {AI_TOOLS.map((item, i) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: i * 0.08, duration: 0.5, ease: "easeOut" }}
-              className="group relative flex flex-col justify-start overflow-hidden rounded-xl border border-cyan-500/30 bg-gray-900 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/50 hover:bg-gray-800 hover:shadow-[0_8px_30px_rgba(6,182,212,0.15)] dark:bg-white/5 dark:hover:bg-white/10"
+        {/* Right edge fade gradient */}
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-gray-50 dark:from-[#121212] to-transparent z-20" />
+
+        <motion.div
+          ref={containerRef}
+          style={{ x }}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerUp}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          className="flex gap-6 cursor-grab active:cursor-grabbing select-none touch-pan-y w-max pl-6 relative"
+        >
+          {marqueeTools.map((item, i) => (
+            <div
+              key={`${item.id}-${i}`}
+              className="group relative flex w-[280px] sm:w-[300px] flex-shrink-0 flex-col justify-start overflow-hidden rounded-xl border border-cyan-500/30 bg-gray-900 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/50 hover:bg-gray-800 hover:shadow-[0_8px_30px_rgba(6,182,212,0.15)] dark:bg-white/5 dark:hover:bg-white/10"
             >
               <GlowingEffect
                 blur={0}
@@ -115,7 +208,7 @@ export default function AIToolkit() {
                 inactiveZone={0.01}
                 className="absolute inset-0 z-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
               />
-              <div className="relative z-10">
+              <div className="relative z-10 pointer-events-none">
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-black/40 text-white shadow-sm transition-transform duration-300 group-hover:scale-110">
                   {item.icon}
                 </div>
@@ -126,9 +219,9 @@ export default function AIToolkit() {
                   {item.description}
                 </p>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

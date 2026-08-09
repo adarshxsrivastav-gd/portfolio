@@ -5,6 +5,7 @@ import Experience from "@/components/Experience";
 import Skills from "@/components/Skills";
 import AIToolkit from "@/components/AIToolkit";
 import About from "@/components/About";
+import Brands from "@/components/Brands";
 import Contact from "@/components/Contact";
 import Stats from "@/components/Stats";
 
@@ -21,6 +22,7 @@ export default function Home() {
       
       {/* CV Content Sections */}
       <About />
+      <Brands />
       <Expertise />
       <Experience />
       <Skills />

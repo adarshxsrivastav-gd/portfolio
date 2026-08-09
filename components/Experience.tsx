@@ -26,9 +26,34 @@ export default function Experience() {
                 className="relative"
               >
                 <div className="absolute -left-[42px] top-1.5 h-4 w-4 rounded-full bg-cyan-500 border-4 border-gray-50 dark:border-[#121212] shadow-[0_0_10px_rgba(6,182,212,0.6)]" />
+                <h4 className="text-2xl font-bold">Senior Executive – Graphic Designer</h4>
+                <p className="mt-1 text-lg font-medium text-gray-600 dark:text-gray-300">
+                  Gyandhara Industries Pvt. Ltd. <span className="text-sm font-normal text-gray-500 dark:text-gray-400">(Sister Brand of Gyan)</span>
+                </p>
+                <p className="mb-4 text-sm font-semibold tracking-wide text-cyan-600 dark:text-cyan-400 uppercase">21 April 2026 – Present</p>
+                <ul className="list-disc space-y-2 pl-5 text-gray-700 dark:text-gray-300">
+                  <li>Led the creation and rebranding of existing design assets, developing a more modern, engaging, and consistent visual identity for Gyandhara</li>
+                  <li>Worked on strengthening Gyandhara’s social media presence by developing creative content and strategies to improve digital engagement and public visibility</li>
+                  <li>Created new creative concepts and content ideas to enhance brand communication and audience engagement across digital platforms</li>
+                  <li>Wrote, edited, and developed scripts for videos, ensuring content aligned with the organization’s communication goals and target audience</li>
+                  <li>Edited and produced video content for social media and promotional campaigns, focusing on storytelling, visual quality, and audience engagement</li>
+                  <li>Contributed creative ideas for campaigns, social media content, branding, and public-facing communication</li>
+                  <li>Worked on the development and creative utilization of Gyandhara’s mascot, “Molly,” for branding, communication, and audience engagement</li>
+                  <li>Supported initiatives aimed at increasing Gyandhara’s public presence, brand awareness, and digital reach through integrated design, content, video, and social media efforts</li>
+                </ul>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.15 }}
+                className="relative"
+              >
+                <div className="absolute -left-[42px] top-1.5 h-4 w-4 rounded-full bg-cyan-500/50 border-4 border-gray-50 dark:border-[#121212]" />
                 <h4 className="text-2xl font-bold">Senior Graphic Designer | Team Leader</h4>
                 <p className="mt-1 text-lg font-medium text-gray-600 dark:text-gray-300">Centurion Defence Academy</p>
-                <p className="mb-4 text-sm font-semibold tracking-wide text-cyan-600 dark:text-cyan-400 uppercase">2025 – Present</p>
+                <p className="mb-4 text-sm font-semibold tracking-wide text-cyan-600 dark:text-cyan-400 uppercase">2025 – 30 March 2026</p>
                 <ul className="list-disc space-y-2 pl-5 text-gray-700 dark:text-gray-300">
                   <li>Managed large-scale creative projects including metro pillar graphics, hoardings, standees, books and brochures totaling 50+ deliverables</li>
                   <li>Designed 100+ social media creatives driving consistent brand growth across platforms</li>
@@ -41,7 +66,7 @@ export default function Experience() {
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.15 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
                 className="relative"
               >
                 <div className="absolute -left-[42px] top-1.5 h-4 w-4 rounded-full bg-cyan-500/50 border-4 border-gray-50 dark:border-[#121212]" />
