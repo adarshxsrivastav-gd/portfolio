@@ -1,26 +1,72 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "Adarsh Srivastav | Graphic Designer & Video Editor",
-  description:
-    "Portfolio of Adarsh Srivastav, a Graphic Designer with 2+ years of experience in branding, social media, and digital visuals.",
-};
-
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { MotionConfig } from "framer-motion";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
+
+const siteUrl = "https://adarshsrivastav.in";
+const siteTitle = "Adarsh Srivastav | Graphic Designer & Video Editor";
+const siteDescription =
+  "Portfolio of Adarsh Srivastav — graphic designer and video editor building brand identity, social creatives and campaign films for Bharat, with AI-powered creative production.";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  title: siteTitle,
+  description: siteDescription,
+  alternates: {
+    canonical: siteUrl,
+  },
+  openGraph: {
+    title: siteTitle,
+    description: siteDescription,
+    url: siteUrl,
+    siteName: "Adarsh Srivastav Portfolio",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: siteTitle,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteTitle,
+    description: siteDescription,
+    images: ["/opengraph-image"],
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Adarsh Srivastav",
+  jobTitle: "Senior Executive – Graphic Designer",
+  description:
+    "Graphic designer and video editor with 2+ years across education, healthcare and FMCG brands — from metro pillar graphics and hoardings to social campaigns, product creatives and brand mascots. Most of my work is built for Bharat: non-metro, Hindi-first audiences where clarity matters more than trend, and the same asset has to hold up on a hoarding and on WhatsApp. I pair traditional design craft with AI production tools, using Photoshop, Illustrator and Premiere alongside Gemini, Veo and Firefly to move from concept to finished asset faster.",
+  url: siteUrl,
+  email: "adarshxsrivastav@gmail.com",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Lucknow",
+    addressRegion: "Uttar Pradesh",
+    addressCountry: "India",
+  },
+  sameAs: [
+    "https://www.linkedin.com/in/adarsh-srivastav-3947b3201",
+    "https://www.behance.net/adarshsrivastav",
+  ],
+};
 
 export default function RootLayout({
   children,
@@ -28,15 +74,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased transition-colors duration-300 bg-gray-50 dark:bg-[#121212] text-gray-900 dark:text-white`}
+        className={`${inter.className} antialiased transition-colors duration-300 bg-[#FAF8F5] dark:bg-[#0B0B0C] text-[#16150F] dark:text-[#F2F0ED]`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <ThemeToggle />
-          <MotionConfig reducedMotion="user">
-            {children}
-          </MotionConfig>
+          <MotionConfig reducedMotion="user">{children}</MotionConfig>
         </ThemeProvider>
       </body>
     </html>

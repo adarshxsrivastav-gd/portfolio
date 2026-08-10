@@ -1,66 +1,35 @@
 "use client";
 
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Overlay() {
   const { scrollYProgress } = useScroll();
 
-  // Unified fade out on scroll to keep the text grouped into the Hero viewport
+  // Unified fade out on scroll to keep text grouped into the Hero viewport
   const globalOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
-  const globalY = useTransform(scrollYProgress, [0, 0.15], [0, -50]);
-
-  const [activeSection, setActiveSection] = useState<"name" | "tagline">("name");
-
-  useEffect(() => {
-    // Alternate between "name" and "tagline" every 5 seconds.
-    const interval = setInterval(() => {
-      setActiveSection((prev) => (prev === "name" ? "tagline" : "name"));
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  const globalY = useTransform(scrollYProgress, [0, 0.15], [0, -40]);
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-10 flex h-screen w-full flex-col justify-center px-8 md:px-24">
-      <motion.div style={{ opacity: globalOpacity, y: globalY }} className="relative h-full w-full">
-        <AnimatePresence mode="wait">
-          {activeSection === "name" && (
-            <motion.div
-              key="name"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="absolute inset-0 flex flex-col items-center justify-center text-center text-gray-900 dark:text-white"
-            >
-              <h1 className="text-5xl font-bold tracking-tight md:text-7xl">
-                Adarsh Srivastav.
-              </h1>
-              <p className="mt-4 text-xl tracking-wide text-gray-600 dark:text-gray-400 md:text-3xl">
-                Graphic Designer & Video Editor.
-              </p>
-            </motion.div>
-          )}
+    <div className="pointer-events-none fixed inset-0 z-10 flex h-screen w-full flex-col justify-center px-6 sm:px-12 md:px-24">
+      {/* THE ONLY GRADIENT ON THE ENTIRE WEBSITE: Subtle top-left radial glow behind Hero */}
+      <div 
+        className="pointer-events-none absolute top-[-10%] left-[-10%] h-[600px] w-[600px] rounded-full blur-[140px] transition-opacity duration-500 bg-[#FF7A18]/[0.06] dark:bg-[#FF7A18]/[0.12]" 
+      />
 
-          {activeSection === "tagline" && (
-            <motion.div
-              key="tagline"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 1, ease: "easeInOut" }}
-              className="absolute inset-0 flex flex-col items-start justify-center pl-0 text-left text-gray-900 dark:text-white md:pl-24"
-            >
-              {/* Reduced size to ~50% of the Name's text-7xl */}
-              <h2 className="mb-4 text-2xl font-bold tracking-tight md:text-4xl">
-                FROM DREAM TO SCREEN
-              </h2>
-              <p className="max-w-2xl text-base tracking-wide text-gray-600 dark:text-gray-400 md:text-lg leading-relaxed">
-                Transforming creative ideas into powerful visuals that connect with people and build strong digital presence.
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
+      <motion.div style={{ opacity: globalOpacity, y: globalY }} className="relative flex h-full w-full items-center justify-center">
+        <motion.div
+          initial={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="flex flex-col items-center justify-center text-center px-4"
+        >
+          <h1 className="text-5xl font-extrabold tracking-tight sm:text-7xl md:text-8xl lg:text-9xl text-[#16150F] dark:text-[#F2F0ED]">
+            Adarsh Srivastav.
+          </h1>
+          <p className="mt-6 text-lg tracking-wide text-[#6B6862] dark:text-[#8A8A8F] sm:text-2xl md:text-3xl max-w-5xl font-medium">
+            Graphic Designer & Video Editor <span className="text-[#C2410C] dark:text-[#FF7A18] font-normal">|</span> AI-Powered Creative Production
+          </p>
+        </motion.div>
       </motion.div>
     </div>
   );

@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
-import { GlowingEffect } from "@/components/ui/glowing-effect";
 
 const ChatGPTIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
@@ -58,7 +57,7 @@ const LoveArtIcon = () => (
 );
 
 const AntigravityIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-indigo-500 drop-shadow-md">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-indigo-500">
     <path d="M21 12A9 9 0 1 1 12 3c2.4 0 4.6 1 6.1 2.6" />
     <path d="M12 12h8" />
     <path d="M12 12L12 3" />
@@ -68,13 +67,13 @@ const AntigravityIcon = () => (
 );
 
 const GoogleFlowIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-cyan-400">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-[#C2410C] dark:text-[#FF7A18]">
     <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
   </svg>
 );
 
 const GooglePomelliIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-purple-400">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-purple-600 dark:text-purple-400">
     <polygon points="12 2 2 7 12 12 22 7 12 2" />
     <polyline points="2 17 12 22 22 17" />
     <polyline points="2 12 12 17 22 12" />
@@ -96,19 +95,45 @@ const AI_TOOLS = [
 
 export default function AIToolkit() {
   const marqueeTools = [...AI_TOOLS, ...AI_TOOLS, ...AI_TOOLS, ...AI_TOOLS];
-  const containerRef = useRef<HTMLDivElement>(null);
+  const setTrackRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
 
   const [isDragging, setIsDragging] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
+  const [singleSetWidth, setSingleSetWidth] = useState(3000);
 
-  const startXRef = useRef(0);
-  const startMotionXRef = useRef(0);
-
-  // Single set of 10 items width: (300px card width + 24px gap) * 10 = 3240px
-  const singleSetWidth = 3240;
   const speed = 45; // pixels per second
+
+  useEffect(() => {
+    const updateSetWidth = () => {
+      if (setTrackRef.current) {
+        const children = setTrackRef.current.children;
+        if (children.length >= AI_TOOLS.length) {
+          const firstChild = children[0] as HTMLElement;
+          const tenthChild = children[AI_TOOLS.length - 1] as HTMLElement;
+          const left = firstChild.offsetLeft;
+          const right = tenthChild.offsetLeft + tenthChild.offsetWidth;
+          const style = window.getComputedStyle(firstChild);
+          const marginRight = parseFloat(style.marginRight) || 16;
+          setSingleSetWidth(right - left + marginRight);
+        }
+      }
+    };
+
+    updateSetWidth();
+    window.addEventListener("resize", updateSetWidth);
+
+    const resizeObserver = new ResizeObserver(updateSetWidth);
+    if (setTrackRef.current) {
+      resizeObserver.observe(setTrackRef.current);
+    }
+
+    return () => {
+      window.removeEventListener("resize", updateSetWidth);
+      resizeObserver.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -119,7 +144,7 @@ export default function AIToolkit() {
   }, []);
 
   useAnimationFrame((_, delta) => {
-    if (!isDragging && !isHovered && !reduceMotion) {
+    if (!isDragging && !isHovered && !reduceMotion && singleSetWidth > 0) {
       let currentX = x.get() - speed * (delta / 1000);
       if (currentX <= -singleSetWidth) {
         currentX += singleSetWidth;
@@ -128,19 +153,13 @@ export default function AIToolkit() {
     }
   });
 
-  const handlePointerDown = (e: React.PointerEvent) => {
+  const handlePanStart = () => {
     setIsDragging(true);
-    startXRef.current = e.clientX;
-    startMotionXRef.current = x.get();
-    try {
-      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-    } catch {}
   };
 
-  const handlePointerMove = (e: React.PointerEvent) => {
-    if (!isDragging) return;
-    const deltaX = e.clientX - startXRef.current;
-    let currentX = startMotionXRef.current + deltaX;
+  const handlePan = (_: any, info: { delta: { x: number } }) => {
+    if (singleSetWidth <= 0) return;
+    let currentX = x.get() + info.delta.x;
 
     while (currentX <= -singleSetWidth * 2) {
       currentX += singleSetWidth;
@@ -152,75 +171,63 @@ export default function AIToolkit() {
     x.set(currentX);
   };
 
-  const handlePointerUp = (e: React.PointerEvent) => {
-    if (isDragging) {
-      setIsDragging(false);
-      try {
-        (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
-      } catch {}
-    }
+  const handlePanEnd = () => {
+    setIsDragging(false);
   };
 
   return (
-    <section id="ai-toolkit" className="relative z-10 bg-gray-50 transition-colors duration-300 dark:bg-[#121212] py-20 text-gray-900 dark:text-white overflow-hidden">
-      <div className="mx-auto max-w-7xl px-8 md:px-24 mb-12">
+    <section id="ai-toolkit" className="relative z-10 min-h-[300px] bg-[#FAF8F5] transition-colors duration-300 dark:bg-[#0B0B0C] py-20 text-[#16150F] dark:text-[#F2F0ED] overflow-hidden border-b border-black/[0.08] dark:border-white/[0.08]">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 md:px-24 mb-10 md:mb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6 }}
         >
-          <h3 className="text-3xl font-bold md:text-5xl">AI Toolkit & Creative Stack</h3>
+          <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight md:text-5xl text-[#16150F] dark:text-[#F2F0ED]">AI Toolkit & Creative Stack</h3>
         </motion.div>
       </div>
 
       {/* Interactive Endless Marquee Container */}
-      <div className="relative w-full overflow-hidden py-4">
+      <div className="relative w-full overflow-hidden py-2 sm:py-4">
         {/* Left edge fade gradient */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-gray-50 dark:from-[#121212] to-transparent z-20" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-24 md:w-32 bg-gradient-to-r from-[#FAF8F5] dark:from-[#0B0B0C] to-transparent z-20" />
         
         {/* Right edge fade gradient */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-gray-50 dark:from-[#121212] to-transparent z-20" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-24 md:w-32 bg-gradient-to-l from-[#FAF8F5] dark:from-[#0B0B0C] to-transparent z-20" />
 
         <motion.div
-          ref={containerRef}
+          ref={setTrackRef}
           style={{ x }}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerUp}
-          onPointerCancel={handlePointerUp}
+          onPanStart={handlePanStart}
+          onPan={handlePan}
+          onPanEnd={handlePanEnd}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="flex gap-6 cursor-grab active:cursor-grabbing select-none touch-pan-y w-max pl-6 relative"
+          className="flex cursor-grab active:cursor-grabbing select-none touch-pan-y w-max pl-4 sm:pl-6 relative"
         >
-          {marqueeTools.map((item, i) => (
-            <div
-              key={`${item.id}-${i}`}
-              className="group relative flex w-[280px] sm:w-[300px] flex-shrink-0 flex-col justify-start overflow-hidden rounded-xl border border-cyan-500/30 bg-gray-900 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/50 hover:bg-gray-800 hover:shadow-[0_8px_30px_rgba(6,182,212,0.15)] dark:bg-white/5 dark:hover:bg-white/10"
-            >
-              <GlowingEffect
-                blur={0}
-                borderWidth={2}
-                spread={40}
-                glow={true}
-                disabled={false}
-                proximity={64}
-                inactiveZone={0.01}
-                className="absolute inset-0 z-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-              />
-              <div className="relative z-10 pointer-events-none">
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-black/40 text-white shadow-sm transition-transform duration-300 group-hover:scale-110">
-                  {item.icon}
+          {marqueeTools.map((item, i) => {
+            const isDuplicate = i >= AI_TOOLS.length;
+            return (
+              <div
+                key={`${item.id}-${i}`}
+                aria-hidden={isDuplicate ? "true" : undefined}
+                className="group relative flex w-[230px] sm:w-[270px] md:w-[300px] flex-shrink-0 flex-col justify-start overflow-hidden rounded-xl border border-black/[0.08] dark:border-white/[0.08] bg-white dark:bg-[#141416] p-4 sm:p-5 md:p-6 mr-4 sm:mr-6 transition-all duration-300 group-hover:-translate-y-1"
+              >
+                <div className="relative z-10 pointer-events-none">
+                  <div className="mb-3 sm:mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg border border-black/[0.08] dark:border-white/[0.08] bg-[#FAF8F5] dark:bg-[#0B0B0C] text-[#16150F] dark:text-[#F2F0ED] shadow-sm transition-transform duration-300 group-hover:scale-105">
+                    {item.icon}
+                  </div>
+                  <h4 className="mb-1 sm:mb-2 text-base sm:text-lg font-bold text-[#16150F] dark:text-[#F2F0ED] transition-colors group-hover:text-[#C2410C] dark:group-hover:text-[#FF7A18] truncate">
+                    {item.name}
+                  </h4>
+                  <p className="text-xs sm:text-sm leading-relaxed text-[#6B6862] dark:text-[#8A8A8F] transition-colors line-clamp-2">
+                    {item.description}
+                  </p>
                 </div>
-                <h4 className="mb-2 text-xl font-bold text-white transition-colors group-hover:text-cyan-400">
-                  {item.name}
-                </h4>
-                <p className="text-sm leading-relaxed text-gray-400 transition-colors group-hover:text-gray-300">
-                  {item.description}
-                </p>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </motion.div>
       </div>
     </section>

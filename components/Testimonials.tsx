@@ -28,30 +28,29 @@ export default function Testimonials() {
   return (
     <div className="w-full py-6">
       <div className="mb-12 flex flex-col items-center justify-center text-center">
-        <h3 className="text-3xl font-bold md:text-5xl text-gray-900 dark:text-white">What People Say</h3>
-        <p className="mt-4 text-gray-600 dark:text-gray-400 text-lg">Feedback from clients and collaborators.</p>
+        <h3 className="text-3xl font-extrabold tracking-tight md:text-5xl text-[#16150F] dark:text-[#F2F0ED]">What People Say</h3>
+        <p className="mt-4 text-[#6B6862] dark:text-[#8A8A8F] text-lg">Feedback from clients and collaborators.</p>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {TESTIMONIALS.map((testimonial, i) => (
-          /* Replace with actual testimonial */
           <motion.div
             key={testimonial.id}
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1, duration: 0.5, ease: "easeOut" }}
-            className="flex flex-col justify-between bg-gray-800 dark:bg-white/5 border border-cyan-500/30 rounded-[12px] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/50 hover:shadow-xl hover:shadow-cyan-500/10"
+            className="flex flex-col justify-between bg-white dark:bg-[#141416] border border-black/[0.08] dark:border-white/[0.08] rounded-xl p-6 transition-all duration-300 group-hover:-translate-y-1"
           >
             <div>
-              <Quote className="h-10 w-10 text-cyan-500 mb-6 drop-shadow-sm opacity-90" />
-              <p className="text-gray-100 dark:text-gray-200 font-light leading-relaxed mb-8 text-[15px]">
+              <Quote className="h-9 w-9 text-[#C2410C] dark:text-[#FF7A18] mb-6 opacity-90" />
+              <p className="text-[#6B6862] dark:text-[#8A8A8F] leading-relaxed mb-8 text-[15px] font-normal">
                 "{testimonial.quote}"
               </p>
             </div>
             <div>
-              <h4 className="font-bold text-white text-lg tracking-wide">{testimonial.name}</h4>
-              <p className="text-sm text-cyan-400 mt-1 font-medium">{testimonial.designation}</p>
+              <h4 className="font-bold text-[#16150F] dark:text-[#F2F0ED] text-base tracking-tight">{testimonial.name}</h4>
+              <p className="text-xs text-[#C2410C] dark:text-[#FF7A18] mt-1 font-bold uppercase tracking-wider">{testimonial.designation}</p>
             </div>
           </motion.div>
         ))}

@@ -3,15 +3,15 @@
 import { motion, useInView, animate } from "framer-motion";
 import { useEffect, useRef } from "react";
 
-function Counter({ from, to }: { from: number; to: number }) {
+function Counter({ to }: { to: number }) {
   const nodeRef = useRef<HTMLSpanElement>(null);
   const inView = useInView(nodeRef, { once: true, margin: "-50px" });
 
   useEffect(() => {
     if (inView && nodeRef.current) {
       const node = nodeRef.current;
-      const controls = animate(from, to, {
-        duration: 2,
+      const controls = animate(0, to, {
+        duration: 1.8,
         ease: "easeOut",
         onUpdate(value) {
           node.textContent = Math.round(value).toString();
@@ -19,9 +19,9 @@ function Counter({ from, to }: { from: number; to: number }) {
       });
       return () => controls.stop();
     }
-  }, [from, to, inView]);
+  }, [to, inView]);
 
-  return <span ref={nodeRef}>{from}</span>;
+  return <span ref={nodeRef}>{to}</span>;
 }
 
 const STATS_DATA = [
@@ -33,27 +33,23 @@ const STATS_DATA = [
 
 export default function Stats() {
   return (
-    <section className="relative z-10 w-full bg-gray-50 transition-colors duration-300 dark:bg-[#121212] py-20 px-8 md:px-24">
-      {/* Glowing Horizontal Separators */}
-      <div className="absolute top-0 left-0 h-[1px] w-full bg-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.5)]" />
-      <div className="absolute bottom-0 left-0 h-[1px] w-full bg-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.5)]" />
-
+    <section className="relative z-10 w-full min-h-[160px] bg-[#FAF8F5] transition-colors duration-300 dark:bg-[#0B0B0C] py-20 px-8 md:px-24 border-y border-black/[0.08] dark:border-white/[0.08]">
       <div className="mx-auto max-w-7xl">
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-black/[0.08] dark:divide-white/[0.08]">
           {STATS_DATA.map((stat, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 1, y: 0 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: i * 0.1, duration: 0.6, ease: "easeOut" }}
-              className="flex flex-col items-center justify-center rounded-[12px] border border-cyan-500/30 bg-gray-800 p-8 text-center transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/60 hover:shadow-[0_0_25px_rgba(6,182,212,0.15)] dark:bg-white/5"
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ delay: i * 0.1, duration: 0.5, ease: "easeOut" }}
+              className="flex flex-col items-center justify-center p-6 text-center"
             >
-              <div className="mb-2 flex items-center text-4xl font-bold text-cyan-400 md:text-5xl">
-                <Counter from={0} to={stat.num} />
-                <span className="ml-1">+</span>
+              <div className="mb-2 flex items-baseline text-4xl font-extrabold tracking-tight text-[#16150F] dark:text-[#F2F0ED] md:text-6xl">
+                <Counter to={stat.num} />
+                <span className="ml-1 text-2xl md:text-4xl text-[#C2410C] dark:text-[#FF7A18] font-bold">+</span>
               </div>
-              <p className="mt-2 text-xs font-bold uppercase tracking-widest text-white">
+              <p className="mt-2 text-xs font-bold uppercase tracking-widest text-[#6B6862] dark:text-[#8A8A8F]">
                 {stat.label}
               </p>
             </motion.div>

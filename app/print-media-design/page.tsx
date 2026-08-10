@@ -54,7 +54,7 @@ export default function PrintMediaPage() {
         >
           <Link
             href="/#design-expertise"
-            className="mb-8 inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 transition-colors hover:text-gray-900 dark:hover:text-white"
+            className="mb-8 inline-flex items-center gap-2 text-[#6B6862] dark:text-[#8A8A8F] transition-colors hover:text-[#C2410C] dark:hover:text-[#FF7A18] font-medium"
           >
             <ArrowLeft size={20} />
             <span>Back to Portfolio</span>
@@ -66,10 +66,10 @@ export default function PrintMediaPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="mb-6 text-4xl font-bold md:text-6xl">
+          <h1 className="mb-6 text-4xl font-extrabold tracking-tight md:text-6xl text-[#16150F] dark:text-[#F2F0ED]">
             Print Media Design
           </h1>
-          <p className="max-w-3xl text-lg text-gray-700 dark:text-gray-300 md:text-xl mb-12">
+          <p className="max-w-3xl text-lg text-[#6B6862] dark:text-[#8A8A8F] md:text-xl mb-12">
             Premium, typography-focused print-ready layouts designed to leave a lasting tactile impression and elevate real-world marketing.
           </p>
         </motion.div>
