@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
+import { motion } from "framer-motion";
 
 const ChatGPTIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
@@ -94,86 +93,7 @@ const AI_TOOLS = [
 ];
 
 export default function AIToolkit() {
-  const marqueeTools = [...AI_TOOLS, ...AI_TOOLS, ...AI_TOOLS, ...AI_TOOLS];
-  const setTrackRef = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-
-  const [isDragging, setIsDragging] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [reduceMotion, setReduceMotion] = useState(false);
-  const [singleSetWidth, setSingleSetWidth] = useState(3000);
-
-  const speed = 45; // pixels per second
-
-  useEffect(() => {
-    const updateSetWidth = () => {
-      if (setTrackRef.current) {
-        const children = setTrackRef.current.children;
-        if (children.length >= AI_TOOLS.length) {
-          const firstChild = children[0] as HTMLElement;
-          const tenthChild = children[AI_TOOLS.length - 1] as HTMLElement;
-          const left = firstChild.offsetLeft;
-          const right = tenthChild.offsetLeft + tenthChild.offsetWidth;
-          const style = window.getComputedStyle(firstChild);
-          const marginRight = parseFloat(style.marginRight) || 16;
-          setSingleSetWidth(right - left + marginRight);
-        }
-      }
-    };
-
-    updateSetWidth();
-    window.addEventListener("resize", updateSetWidth);
-
-    const resizeObserver = new ResizeObserver(updateSetWidth);
-    if (setTrackRef.current) {
-      resizeObserver.observe(setTrackRef.current);
-    }
-
-    return () => {
-      window.removeEventListener("resize", updateSetWidth);
-      resizeObserver.disconnect();
-    };
-  }, []);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduceMotion(mediaQuery.matches);
-    const handleChange = (e: MediaQueryListEvent) => setReduceMotion(e.matches);
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
-  }, []);
-
-  useAnimationFrame((_, delta) => {
-    if (!isDragging && !isHovered && !reduceMotion && singleSetWidth > 0) {
-      let currentX = x.get() - speed * (delta / 1000);
-      if (currentX <= -singleSetWidth) {
-        currentX += singleSetWidth;
-      }
-      x.set(currentX);
-    }
-  });
-
-  const handlePanStart = () => {
-    setIsDragging(true);
-  };
-
-  const handlePan = (_: any, info: { delta: { x: number } }) => {
-    if (singleSetWidth <= 0) return;
-    let currentX = x.get() + info.delta.x;
-
-    while (currentX <= -singleSetWidth * 2) {
-      currentX += singleSetWidth;
-    }
-    while (currentX >= 0) {
-      currentX -= singleSetWidth;
-    }
-
-    x.set(currentX);
-  };
-
-  const handlePanEnd = () => {
-    setIsDragging(false);
-  };
+  const marqueeTools = [...AI_TOOLS, ...AI_TOOLS];
 
   return (
     <section id="ai-toolkit" className="relative z-10 min-h-[300px] bg-[#FAF8F5] transition-colors duration-300 dark:bg-[#0B0B0C] py-20 text-[#16150F] dark:text-[#F2F0ED] overflow-hidden border-b border-black/[0.08] dark:border-white/[0.08]">
@@ -196,16 +116,7 @@ export default function AIToolkit() {
         {/* Right edge fade gradient */}
         <div className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-24 md:w-32 bg-gradient-to-l from-[#FAF8F5] dark:from-[#0B0B0C] to-transparent z-20" />
 
-        <motion.div
-          ref={setTrackRef}
-          style={{ x }}
-          onPanStart={handlePanStart}
-          onPan={handlePan}
-          onPanEnd={handlePanEnd}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          className="flex cursor-grab active:cursor-grabbing select-none touch-pan-y w-max pl-4 sm:pl-6 relative"
-        >
+        <div className="animate-marquee-toolkit flex select-none touch-pan-y w-max pl-4 sm:pl-6 relative flex-nowrap">
           {marqueeTools.map((item, i) => {
             const isDuplicate = i >= AI_TOOLS.length;
             return (
@@ -228,7 +139,7 @@ export default function AIToolkit() {
               </div>
             );
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

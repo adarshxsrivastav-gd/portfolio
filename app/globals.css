@@ -54,12 +54,42 @@
   will-change: transform;
 }
 
-.animate-marquee:hover {
+.animate-marquee-brands {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-toolkit {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+  will-change: transform;
+}
+
+@media (max-width: 768px) {
+  .animate-marquee-brands {
+    animation-duration: 40s;
+  }
+  .animate-marquee-toolkit {
+    animation-duration: 50s;
+  }
+}
+
+.animate-marquee:hover,
+.animate-marquee:active,
+.animate-marquee-brands:hover,
+.animate-marquee-brands:active,
+.animate-marquee-toolkit:hover,
+.animate-marquee-toolkit:active {
   animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee {
-    animation: none;
+  .animate-marquee,
+  .animate-marquee-brands,
+  .animate-marquee-toolkit {
+    animation-duration: 80s !important;
   }
 }

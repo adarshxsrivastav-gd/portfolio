@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: siteTitle,
   description: siteDescription,
+  verification: {
+    google: "a2bo5Tfocvn6Y5-rIBFKUpPJ1XAKpsAqHeJ-iZaSS80",
+  },
   alternates: {
     canonical: siteUrl,
   },
