@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { HeaderActions } from "@/components/HeaderActions";
 import { MotionConfig } from "framer-motion";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -86,9 +88,11 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <ThemeToggle />
+          <HeaderActions />
           <MotionConfig reducedMotion="user">{children}</MotionConfig>
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

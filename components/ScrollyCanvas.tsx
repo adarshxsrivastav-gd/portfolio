@@ -12,51 +12,69 @@ export default function ScrollyCanvas({ frameCount = 90 }: { frameCount?: number
     offset: ["start start", "end end"]
   });
 
-  // Preload images
+  // Preload first frame immediately, defer remaining frames to avoid network saturation during LCP
   useEffect(() => {
-    const loadedImages: HTMLImageElement[] = [];
-    let loadedCount = 0;
-    
-    for (let i = 0; i < frameCount; i++) {
-      const img = new Image();
-      // Adjust padding based on the exact filename format from prompt:
-      // frame_000.png to frame_119.png
-      const paddedIndex = i.toString().padStart(3, "0");
-      img.src = `/sequence/frame_${paddedIndex}.png`;
-      img.onload = () => {
-        loadedCount++;
-        if (loadedCount === frameCount) {
-          // Render first frame when loaded
-          renderFrame(0, loadedImages);
-        }
-      };
-      // Important to push to index i to preserve order even if they load out of order
-      loadedImages[i] = img;
+    const loadedImages: HTMLImageElement[] = new Array(frameCount);
+
+    // 1. Load first frame immediately for fast FCP/LCP
+    const firstImg = new Image();
+    firstImg.src = "/sequence/frame_000.png";
+    firstImg.onload = () => {
+      loadedImages[0] = firstImg;
+      renderFrame(0, loadedImages);
+    };
+
+    // 2. Defer preloading the rest of the 3D frame sequence after page load / main thread idle
+    const loadRemainingFrames = () => {
+      for (let i = 0; i < frameCount; i++) {
+        if (i === 0) continue;
+        const img = new Image();
+        const paddedIndex = i.toString().padStart(3, "0");
+        img.src = `/sequence/frame_${paddedIndex}.png`;
+        img.onload = () => {
+          loadedImages[i] = img;
+        };
+      }
+      setImages(loadedImages);
+    };
+
+    let timer: NodeJS.Timeout;
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      (window as Window & { requestIdleCallback: (cb: () => void) => void }).requestIdleCallback(() => {
+        timer = setTimeout(loadRemainingFrames, 300);
+      });
+    } else {
+      timer = setTimeout(loadRemainingFrames, 500);
     }
-    setImages(loadedImages);
 
     const handleResize = () => {
-      if (loadedImages.length > 0) {
-        renderFrame(Math.floor(scrollYProgress.get() * (frameCount - 1)), loadedImages);
+      if (loadedImages[0]) {
+        const currentProgress = scrollYProgress.get();
+        const index = Math.min(frameCount - 1, Math.max(0, Math.floor(currentProgress * frameCount)));
+        renderFrame(index, loadedImages);
       }
     };
 
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", handleResize);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [frameCount]);
 
   const renderFrame = (index: number, imgs: HTMLImageElement[] = images) => {
-    if (!canvasRef.current || !imgs[index]) return;
+    if (!canvasRef.current) return;
+    const img = imgs[index] || imgs[0];
+    if (!img) return;
+
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Update canvas size to match window
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const img = imgs[index];
     const canvasRatio = canvas.width / canvas.height;
     const imgRatio = img.width / img.height;
 
@@ -65,18 +83,14 @@ export default function ScrollyCanvas({ frameCount = 90 }: { frameCount?: number
     let offsetX = 0;
     let offsetY = 0;
 
-    // object-fit: cover logic
     if (canvasRatio > imgRatio) {
-      // Canvas is wider than image
       drawHeight = canvas.width / imgRatio;
       offsetY = (canvas.height - drawHeight) / 2;
     } else {
-      // Canvas is taller than image
       drawWidth = canvas.height * imgRatio;
       offsetX = (canvas.width - drawWidth) / 2;
     }
 
-    // clear background with hex code to match video background #121212
     ctx.fillStyle = "#121212";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
@@ -84,13 +98,12 @@ export default function ScrollyCanvas({ frameCount = 90 }: { frameCount?: number
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     if (images.length === 0) return;
-    
-    // Convert 0-1 to 0-89
+
     const frameIndex = Math.min(
       frameCount - 1,
       Math.max(0, Math.floor(latest * frameCount))
     );
-    
+
     requestAnimationFrame(() => renderFrame(frameIndex));
   });
 

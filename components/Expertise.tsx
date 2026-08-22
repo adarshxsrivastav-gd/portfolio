@@ -88,13 +88,13 @@ export default function Expertise() {
                 >
                   {/* Image Container: 4:3 Aspect Ratio, TRUE COLOURS */}
                   <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#FAF8F5] dark:bg-[#0B0B0C]">
-                    {/* Image element only has blur applied (8px desktop default, 3px touch default, 0px on hover). Text & pill remain 100% sharp! */}
+                    {/* Image element only has blur applied on desktop (@media hover/md). On mobile touch screens, blur is 0 to avoid mobile GPU filter repainting on scroll! */}
                     <div className="relative h-full w-full overflow-hidden">
                       <Image 
                         src={item.image} 
                         alt={item.title} 
                         fill 
-                        className="object-cover transition-all duration-400 ease-out blur-[3px] md:blur-[8px] group-hover:blur-0 group-hover:scale-[1.03] will-change-[filter,transform]" 
+                        className="object-cover transition-all duration-400 ease-out blur-none md:blur-[8px] md:group-hover:blur-0 group-hover:scale-[1.03] will-change-[filter,transform]" 
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, (max-width: 1440px) 33vw, 25vw"
                       />
                     </div>
@@ -121,8 +121,8 @@ export default function Expertise() {
                       </h4>
                     </div>
 
-                    {/* 2px accent line animates from left to right on hover */}
-                    <div className="mt-3 h-[2px] w-0 bg-[#C2410C] dark:bg-[#FF7A18] transition-all duration-400 ease-out group-hover:w-full" />
+                    {/* 2px accent line animates from left to right on hover using GPU scaleX transform instead of width reflow */}
+                    <div className="mt-3 h-[2px] w-full scale-x-0 group-hover:scale-x-100 origin-left bg-[#C2410C] dark:bg-[#FF7A18] transition-transform duration-300 ease-out" />
                   </div>
                 </motion.div>
               </Link>

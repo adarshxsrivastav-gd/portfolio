@@ -116,7 +116,7 @@ export default function AIToolkit() {
         {/* Right edge fade gradient */}
         <div className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-24 md:w-32 bg-gradient-to-l from-[#FAF8F5] dark:from-[#0B0B0C] to-transparent z-20" />
 
-        <div className="animate-marquee-toolkit flex select-none touch-pan-y w-max pl-4 sm:pl-6 relative flex-nowrap">
+        <div className="animate-marquee-toolkit flex select-none touch-pan-y w-max pl-4 sm:pl-6 relative flex-nowrap transform-gpu">
           {marqueeTools.map((item, i) => {
             const isDuplicate = i >= AI_TOOLS.length;
             return (

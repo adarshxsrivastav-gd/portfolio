@@ -6,7 +6,7 @@ const BRANDS = [
   { id: 1, name: "Apollo Hospitals", category: "Healthcare & Hospitals" },
   { id: 2, name: "Medanta Hospitals", category: "Multi-Speciality Care" },
   { id: 3, name: "Shudh Dairy", category: "Pure Dairy & Foods" },
-  { id: 4, name: "Orancia", category: "Beverages & FMCG Brand" },
+  { id: 4, name: "Orancia", category: "Skincare & Personal Care" },
 ];
 
 export default function Brands() {
@@ -35,7 +35,7 @@ export default function Brands() {
         {/* Right edge fade gradient */}
         <div className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-24 md:w-32 bg-gradient-to-l from-[#FAF8F5] dark:from-[#0B0B0C] to-transparent z-20" />
 
-        <div className="animate-marquee-brands flex items-center select-none touch-pan-y w-max pl-4 sm:pl-8 relative flex-nowrap">
+        <div className="animate-marquee-brands flex items-center select-none touch-pan-y w-max pl-4 sm:pl-8 relative flex-nowrap transform-gpu">
           {marqueeBrands.map((item, i) => {
             const isDuplicate = i >= BRANDS.length;
             return (

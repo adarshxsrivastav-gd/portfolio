@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 
@@ -73,15 +74,18 @@ export default function MollyMascotCaseStudy() {
           </p>
         </header>
 
-        {/* Hero Image Placeholder */}
+        {/* Hero Image Container */}
         <div className="mb-12 md:mb-16">
-          <ImagePlaceholder
-            src="/images/work/molly-mascot/hero.webp"
-            alt="Molly mascot character system for Gyandhara"
-            label="Molly Mascot — Hero Image"
-            aspectRatio="aspect-[16/9]"
-            priority={true}
-          />
+          <div className="flex items-center justify-center rounded-[16px] border border-black/[0.08] dark:border-white/[0.08] bg-white dark:bg-[#141416] p-4 sm:p-6 md:p-8 lg:p-10">
+            <Image
+              src="/images/work/molly-mascot/molly-character-sheet.webp"
+              alt="Molly mascot character system sheet for Gyandhara"
+              width={1024}
+              height={576}
+              priority
+              className="w-full h-auto object-contain"
+            />
+          </div>
         </div>
 
         {/* Editorial Body Content */}
