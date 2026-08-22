@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowRight, Download } from "lucide-react";
 
 export default function Contact() {
   return (
@@ -23,15 +23,29 @@ export default function Contact() {
             Open for Freelance and Full-Time opportunities. Let's collaborate to transform your ideas into visually powerful digital experiences.
           </p>
           
-          <motion.a 
-            href="mailto:adarshxsrivastav@gmail.com?subject=Project%20Inquiry&body=Hi%20Adarsh%2C%20I%20would%20like%20to%20work%20with%20you."
-            className="relative z-10 inline-flex items-center gap-3 rounded-xl bg-[#C2410C] hover:bg-[#9A3412] dark:bg-[#FF7A18] dark:hover:bg-[#FF9147] text-white dark:text-[#0B0B0C] px-8 py-4 text-base font-bold transition-all"
-            whileHover={{ scale: 1.03, y: -2 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            Let's Work Together
-            <ArrowRight size={18} />
-          </motion.a>
+          <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <motion.a 
+              href="mailto:adarshxsrivastav@gmail.com?subject=Project%20Inquiry&body=Hi%20Adarsh%2C%20I%20would%20like%20to%20work%20with%20you."
+              className="inline-flex items-center gap-3 rounded-xl bg-[#C2410C] hover:bg-[#9A3412] dark:bg-[#FF7A18] dark:hover:bg-[#FF9147] text-white dark:text-[#0B0B0C] px-8 py-4 text-base font-bold transition-all"
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              Let's Work Together
+              <ArrowRight size={18} />
+            </motion.a>
+
+            <motion.a 
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 rounded-xl border border-black/[0.12] dark:border-white/[0.12] bg-white dark:bg-[#141416] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-[#16150F] dark:text-[#F2F0ED] px-8 py-4 text-base font-bold transition-all"
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              <Download size={18} className="text-[#C2410C] dark:text-[#FF7A18]" />
+              Download Resume
+            </motion.a>
+          </div>
         </motion.div>
 
         {/* Contact Cards */}
@@ -53,7 +67,7 @@ export default function Contact() {
             {
               icon: <MapPin className="h-6 w-6" />,
               title: "Location",
-              value: "India",
+              value: "Lucknow, Uttar Pradesh, India",
               href: null,
               external: false
             }
@@ -108,7 +122,7 @@ export default function Contact() {
             {/* Column 1: Brand */}
             <div className="flex flex-col items-center md:items-start">
               <h3 className="text-xl font-bold text-[#16150F] dark:text-[#F2F0ED] mb-2">Adarsh Srivastav</h3>
-              <p className="text-[#C2410C] dark:text-[#FF7A18] text-sm mb-4 font-semibold">Graphic Designer & Video Editor</p>
+              <p className="text-[#C2410C] dark:text-[#FF7A18] text-sm mb-4 font-semibold">Graphic Designer & Video Editor | AI-Powered Creative Production</p>
               <p className="text-[#6B6862] dark:text-[#8A8A8F] text-sm">Open for Freelance & Full-Time opportunities</p>
             </div>
 

@@ -1,5 +1,6 @@
 import ScrollyCanvas from "@/components/ScrollyCanvas";
 import Overlay from "@/components/Overlay";
+import SelectedWork from "@/components/SelectedWork";
 import Expertise from "@/components/Expertise";
 import Experience from "@/components/Experience";
 import Skills from "@/components/Skills";
@@ -23,6 +24,7 @@ export default function Home() {
       {/* CV Content Sections */}
       <About />
       <Brands />
+      <SelectedWork />
       <Expertise />
       <Experience />
       <Skills />
@@ -31,3 +33,4 @@ export default function Home() {
     </main>
   );
 }
+

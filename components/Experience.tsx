@@ -77,8 +77,7 @@ export default function Experience() {
                   <li>Designed 200+ YouTube thumbnails resulting in improved click-through rates for the channel</li>
                   <li>Created 150+ social media posts maintaining consistent brand identity across all platforms</li>
                   <li>Produced 50+ product creatives and website banners for digital marketing campaigns</li>
-                  <li>Delivered 30+ motion graphics projects on time with zero revision rejections</li>
-                  <li>Improved personal design speed by 60% through mastering keyboard shortcuts and batch workflows</li>
+                  <li>Produced 30+ motion graphics projects for campaign and channel use</li>
                 </ul>
               </motion.div>
             </div>
@@ -119,19 +118,6 @@ export default function Experience() {
                 <h4 className="text-2xl font-bold text-[#16150F] dark:text-[#F2F0ED]">B.A Honours (Arts)</h4>
                 <p className="mt-1 text-lg font-medium text-[#6B6862] dark:text-[#8A8A8F]">B.M Memorial College</p>
                 <p className="text-xs font-bold tracking-widest text-[#C2410C] dark:text-[#FF7A18] uppercase">2020 – 2023</p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="relative"
-              >
-                <div className="absolute -left-[37px] top-1.5 h-3.5 w-3.5 rounded-full bg-[#6B6862] dark:bg-[#8A8A8F] border-2 border-[#FAF8F5] dark:border-[#0B0B0C]" />
-                <h4 className="text-2xl font-bold text-[#16150F] dark:text-[#F2F0ED]">Intermediate (PCB Stream)</h4>
-                <p className="mt-1 text-lg font-medium text-[#6B6862] dark:text-[#8A8A8F]">KPSSPP Inter College</p>
-                <p className="text-xs font-bold tracking-widest text-[#C2410C] dark:text-[#FF7A18] uppercase">2018 – 2020</p>
               </motion.div>
             </div>
           </div>

@@ -4,7 +4,16 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 
-const EXPERTISE = [
+interface ExpertiseItem {
+  id: number;
+  title: string;
+  category: string;
+  image: string;
+  externalLink?: string;
+  route?: string;
+}
+
+const EXPERTISE: ExpertiseItem[] = [
   { 
     id: 1, 
     title: "Social Media Creatives", 
@@ -28,7 +37,7 @@ const EXPERTISE = [
     title: "Video & Motions", 
     category: "Video Editing", 
     image: "/images/video_motions_custom.png",
-    externalLink: "https://www.behance.net/gallery/246104735/Motions-Video",
+    route: "/video-and-motions",
   },
   { 
     id: 6, 
@@ -61,7 +70,7 @@ export default function Expertise() {
         {/* CSS Grid: 4 cols at 1440px+ (xl:grid-cols-4), 3 cols laptop (lg:grid-cols-3), 2 cols tablet (md:grid-cols-2), 1 col mobile (grid-cols-1). Gap: 20px */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[20px]">
           {EXPERTISE.map((item, i) => {
-            const currentRoute = item.externalLink || `/${item.title.toLowerCase().replace(/\s+/g, '-')}`;
+            const currentRoute = item.route || item.externalLink || `/${item.title.toLowerCase().replace(/\s+/g, '-')}`;
 
             return (
               <Link
