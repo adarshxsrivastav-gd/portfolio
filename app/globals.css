@@ -93,3 +93,28 @@
     animation-duration: 80s !important;
   }
 }
+
+/* Header Resume Button Desktop Hover Expansion */
+@media (hover: hover) and (pointer: fine) {
+  .resume-btn-expand {
+    transition: width 250ms ease-out, border-color 200ms ease-out, color 200ms ease-out;
+  }
+  .resume-btn-expand:hover {
+    width: 108px;
+    border-color: #C2410C;
+    color: #C2410C;
+  }
+  :where(.dark, .dark *) .resume-btn-expand:hover {
+    border-color: #FF7A18;
+    color: #FF7A18;
+  }
+  .resume-btn-expand:hover .resume-btn-text {
+    opacity: 1;
+  }
+  .resume-btn-expand:hover .resume-btn-icon {
+    color: #C2410C;
+  }
+  :where(.dark, .dark *) .resume-btn-expand:hover .resume-btn-icon {
+    color: #FF7A18;
+  }
+}
