@@ -1,22 +1,116 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useInView, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { X, Maximize2 } from "lucide-react";
 
-const HARD_SKILLS = [
-  { name: "Photoshop", icon: "/icons/ps.svg" },
-  { name: "Canva", icon: "/icons/canva.svg" },
-  { name: "Premiere Pro", icon: "/icons/pr.svg" },
-  { name: "Illustrator", icon: "/icons/ai.svg" },
-  { name: "CorelDRAW", icon: "/icons/cd.svg" },
-  { name: "After Effects", icon: "/icons/ae.svg" },
-  { name: "InDesign", icon: "/icons/id.svg" },
+interface HardSkill {
+  name: string;
+  icon: string;
+  percentage: number;
+}
+
+const HARD_SKILLS: HardSkill[] = [
+  { name: "Photoshop", icon: "/icons/ps.svg", percentage: 90 },
+  { name: "CorelDRAW", icon: "/icons/cd.svg", percentage: 90 },
+  { name: "Canva", icon: "/icons/canva.svg", percentage: 85 },
+  { name: "Premiere Pro", icon: "/icons/pr.svg", percentage: 80 },
+  { name: "Illustrator", icon: "/icons/ai.svg", percentage: 70 },
+  { name: "After Effects", icon: "/icons/ae.svg", percentage: 70 },
+  { name: "InDesign", icon: "/icons/id.svg", percentage: 65 },
 ];
 
 const SOFT_SKILLS = ["Teamwork", "Leadership", "Problem Solving", "Creative Thinking"];
 const LANGUAGES = ["Hindi", "English"];
+
+function SkillRow({ skill, index }: { skill: HardSkill; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const prefersReducedMotion = useReducedMotion();
+  const [displayPercent, setDisplayPercent] = useState<number>(skill.percentage);
+  const [hasHydrated, setHasHydrated] = useState(false);
+
+  useEffect(() => {
+    setHasHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hasHydrated || !isInView) return;
+    if (prefersReducedMotion) {
+      setDisplayPercent(skill.percentage);
+      return;
+    }
+
+    const delayMs = index * 80;
+    const durationMs = 900;
+    let animationFrameId: number;
+    let startTime: number | null = null;
+
+    const timer = setTimeout(() => {
+      const step = (timestamp: number) => {
+        if (!startTime) startTime = timestamp;
+        const elapsed = timestamp - startTime;
+        const progress = Math.min(elapsed / durationMs, 1);
+        const easedProgress = 1 - Math.pow(1 - progress, 3);
+        const currentVal = Math.round(easedProgress * skill.percentage);
+        setDisplayPercent(currentVal);
+
+        if (progress < 1) {
+          animationFrameId = requestAnimationFrame(step);
+        }
+      };
+      animationFrameId = requestAnimationFrame(step);
+    }, delayMs);
+
+    return () => {
+      clearTimeout(timer);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
+  }, [isInView, hasHydrated, skill.percentage, index, prefersReducedMotion]);
+
+  return (
+    <div ref={ref} className="w-full space-y-2.5">
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-[28px] h-[28px] min-w-[28px] min-h-[28px] flex-shrink-0 flex items-center justify-center rounded-md border border-black/[0.08] dark:border-white/[0.08] bg-white dark:bg-[#141416]">
+            <Image
+              src={skill.icon}
+              alt={skill.name}
+              width={16}
+              height={16}
+              className="h-4 w-4 object-contain"
+            />
+          </div>
+          <span className="text-sm font-medium text-[#16150F] dark:text-[#F2F0ED] whitespace-nowrap truncate">
+            {skill.name}
+          </span>
+        </div>
+        <span
+          className="tabular-nums text-sm font-normal text-[#6B6862] dark:text-[#8A8A8F] flex-shrink-0 text-right"
+          style={{ fontVariantNumeric: "tabular-nums" }}
+        >
+          {displayPercent}%
+        </span>
+      </div>
+
+      <div className="h-[5px] w-full rounded-full bg-[#16150F]/[0.10] dark:bg-white/[0.08] relative">
+        <motion.div
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: skill.percentage / 100 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{
+            duration: prefersReducedMotion ? 0 : 0.9,
+            delay: prefersReducedMotion ? 0 : index * 0.08,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          style={{ originX: 0 }}
+          className="h-full w-full rounded-full bg-gradient-to-r from-[#C2410C] to-[#E0561B] dark:from-[#FF7A18] dark:to-[#FF9D4D] shadow-[0_0_6px_rgba(194,65,12,0.25)] dark:shadow-[0_0_8px_rgba(255,122,24,0.3)]"
+        />
+      </div>
+    </div>
+  );
+}
 
 export default function Skills() {
   const [activeLightbox, setActiveLightbox] = useState<"claude" | "newspaper" | null>(null);
@@ -58,27 +152,9 @@ export default function Skills() {
             <h4 className="mb-6 text-xl font-bold text-[#16150F] dark:text-[#F2F0ED]">
               Hard Skills
             </h4>
-            <div className="flex flex-wrap gap-3 pt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6.5 sm:gap-x-10 sm:gap-y-7 pt-1">
               {HARD_SKILLS.map((skill, index) => (
-                <motion.div
-                  key={skill.name}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="flex items-center gap-2.5 rounded-full border border-black/[0.08] dark:border-white/[0.08] bg-white dark:bg-[#141416] px-4 py-2 text-sm font-medium text-[#16150F] dark:text-[#F2F0ED] shadow-xs"
-                >
-                  <div className="relative h-4 w-4 flex-shrink-0">
-                    <Image
-                      src={skill.icon}
-                      alt={skill.name}
-                      width={16}
-                      height={16}
-                      className="h-full w-full object-contain"
-                    />
-                  </div>
-                  <span>{skill.name}</span>
-                </motion.div>
+                <SkillRow key={skill.name} skill={skill} index={index} />
               ))}
             </div>
           </div>
