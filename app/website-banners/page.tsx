@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { ImageGallery } from "@/components/ImageGallery";
+import { useLanguage } from "@/components/LanguageProvider";
 
 const WEBSITE_BANNERS = [
   {
@@ -19,6 +20,8 @@ const WEBSITE_BANNERS = [
 ];
 
 export default function WebsiteBannersPage() {
+  const { t } = useLanguage();
+
   return (
     <main className="min-h-screen bg-transparent">
       <div className="mx-auto max-w-7xl px-8 py-24 md:px-24">
@@ -32,7 +35,7 @@ export default function WebsiteBannersPage() {
             className="mb-8 inline-flex items-center gap-2 text-[#6B6862] dark:text-[#8A8A8F] transition-colors hover:text-[#C2410C] dark:hover:text-[#FF7A18] font-medium"
           >
             <ArrowLeft size={20} />
-            <span>Back to Portfolio</span>
+            <span>{t("category.back")}</span>
           </Link>
         </motion.div>
 
@@ -42,10 +45,10 @@ export default function WebsiteBannersPage() {
           transition={{ duration: 0.6 }}
         >
           <h1 className="mb-6 text-4xl font-extrabold tracking-tight md:text-6xl text-[#16150F] dark:text-[#F2F0ED]">
-            Website Banners
+            {t("expertise.websiteBanners.title")}
           </h1>
           <p className="max-w-3xl text-lg text-[#6B6862] dark:text-[#8A8A8F] md:text-xl mb-12">
-            Engaging, high-conversion website banners and header hero images formatted across various device aspect ratios.
+            {t("category.websiteBanners.desc")}
           </p>
         </motion.div>
 

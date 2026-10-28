@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { X, Maximize2 } from "lucide-react";
+import { useLanguage } from "./LanguageProvider";
 
 interface HardSkill {
   name: string;
@@ -20,9 +21,6 @@ const HARD_SKILLS: HardSkill[] = [
   { name: "After Effects", icon: "/icons/ae.svg", percentage: 70 },
   { name: "InDesign", icon: "/icons/id.svg", percentage: 65 },
 ];
-
-const SOFT_SKILLS = ["Teamwork", "Leadership", "Problem Solving", "Creative Thinking"];
-const LANGUAGES = ["Hindi", "English"];
 
 function SkillRow({ skill, index }: { skill: HardSkill; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -113,6 +111,7 @@ function SkillRow({ skill, index }: { skill: HardSkill; index: number }) {
 }
 
 export default function Skills() {
+  const { t } = useLanguage();
   const [activeLightbox, setActiveLightbox] = useState<"claude" | "newspaper" | null>(null);
   const [newspaperImageError, setNewspaperImageError] = useState(false);
   const [newspaperImageLoaded, setNewspaperImageLoaded] = useState(false);
@@ -121,6 +120,15 @@ export default function Skills() {
 
   const newspaperImgSrc = "/images/recognition/mr-up-uk-2k19-dainik-jagran.webp";
   const claudeImgSrc = "/images/recognition/claude-101-certificate.webp";
+
+  const SOFT_SKILLS = [
+    t("skills.soft.teamwork"),
+    t("skills.soft.leadership"),
+    t("skills.soft.problemSolving"),
+    t("skills.soft.creativeThinking"),
+  ];
+
+  const LANGUAGES = [t("skills.lang.hindi"), t("skills.lang.english")];
 
   // Handle ESC key to close lightbox
   useEffect(() => {
@@ -143,14 +151,14 @@ export default function Skills() {
     <section className="relative z-10 min-h-[400px] bg-[#FAF8F5] transition-colors duration-300 dark:bg-[#0B0B0C] px-6 sm:px-8 py-24 md:py-32 text-[#16150F] dark:text-[#F2F0ED] md:px-24 border-b border-black/[0.08] dark:border-white/[0.08]">
       <div className="mx-auto max-w-7xl">
         <h3 className="mb-16 text-3xl font-extrabold tracking-tight md:text-5xl text-[#16150F] dark:text-[#F2F0ED]">
-          Skills & Proficiencies
+          {t("skills.heading")}
         </h3>
 
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-24">
           {/* Hard Skills */}
           <div>
             <h4 className="mb-6 text-xl font-bold text-[#16150F] dark:text-[#F2F0ED]">
-              Hard Skills
+              {t("skills.hardSkills")}
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6.5 sm:gap-x-10 sm:gap-y-7 pt-1">
               {HARD_SKILLS.map((skill, index) => (
@@ -163,7 +171,7 @@ export default function Skills() {
             {/* Soft Skills */}
             <div>
               <h4 className="mb-6 text-xl font-bold text-[#16150F] dark:text-[#F2F0ED]">
-                Soft Skills
+                {t("skills.softSkills")}
               </h4>
               <div className="flex flex-wrap gap-3">
                 {SOFT_SKILLS.map((skill, index) => (
@@ -184,7 +192,7 @@ export default function Skills() {
             {/* Languages */}
             <div>
               <h4 className="mb-6 text-xl font-bold text-[#16150F] dark:text-[#F2F0ED]">
-                Languages
+                {t("skills.languages")}
               </h4>
               <div className="flex flex-wrap gap-3">
                 {LANGUAGES.map((lang, index) => (
@@ -205,7 +213,7 @@ export default function Skills() {
             {/* Certifications & Recognition */}
             <div>
               <h4 className="mb-6 text-xl font-bold text-[#16150F] dark:text-[#F2F0ED]">
-                Certifications & Recognition
+                {t("skills.certifications")}
               </h4>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
@@ -214,18 +222,18 @@ export default function Skills() {
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
-                  className="rounded-xl border border-black/[0.08] dark:border-white/[0.08] bg-white dark:bg-[#141416] p-6 flex flex-col justify-between h-full space-y-4"
+                  className="editorial-card-hover rounded-xl border border-black/[0.08] dark:border-white/[0.08] bg-white dark:bg-[#141416] p-6 flex flex-col justify-between h-full space-y-4"
                 >
                   <div className="flex-1 flex flex-col justify-between space-y-4">
                     <div>
                       <h5 className="text-lg font-bold text-[#16150F] dark:text-[#F2F0ED]">
-                        Claude 101 — Certificate of Completion
+                        {t("skills.cert1.title")}
                       </h5>
                       <p className="mt-1 text-sm text-[#6B6862] dark:text-[#8A8A8F]">
-                        Anthropic Academy · 2026
+                        {t("skills.cert1.issuer")}
                       </p>
                       <p className="mt-2 text-sm text-[#6B6862] dark:text-[#8A8A8F]">
-                        Foundational certification in working with Claude across research, content production and creative workflows.
+                        {t("skills.cert1.body")}
                       </p>
                     </div>
 
@@ -241,14 +249,14 @@ export default function Skills() {
                         }}
                         tabIndex={0}
                         role="button"
-                        aria-label="View Claude 101 Certificate of Completion from Anthropic Academy"
+                        aria-label={t("skills.cert1.ariaLabel")}
                         className="group relative w-full aspect-[4/3] overflow-hidden rounded-lg border border-black/[0.08] dark:border-white/[0.08] bg-[#FAF8F5] dark:bg-[#0B0B0C] p-1.5 sm:p-2 cursor-pointer transition-all hover:border-[#C2410C]/40 dark:hover:border-[#FF7A18]/40 focus:outline-none focus:ring-2 focus:ring-[#FF7A18]/50"
                       >
                         <div className="relative w-full h-full overflow-hidden rounded-md bg-white dark:bg-[#1C1C1E] flex items-center justify-center">
                           {!claudeImageError && (
                             <Image
                               src={claudeImgSrc}
-                              alt="Claude 101 Certificate of Completion from Anthropic Academy"
+                              alt={t("skills.cert1.ariaLabel")}
                               fill
                               className={`object-cover object-top transition-transform duration-300 group-hover:scale-105 ${
                                 claudeImageLoaded ? "opacity-100" : "opacity-0"
@@ -262,7 +270,7 @@ export default function Skills() {
                           {(!claudeImageLoaded || claudeImageError) && (
                             <div className="absolute inset-0 flex flex-col items-center justify-center p-3 text-center select-none bg-[#FAF8F5] dark:bg-[#141416]">
                               <span className="text-xs sm:text-sm font-medium text-[#6B6862] dark:text-[#8A8A8F]">
-                                Claude 101 — Certificate of Completion
+                                {t("skills.cert1.fallback")}
                               </span>
                             </div>
                           )}
@@ -271,14 +279,14 @@ export default function Skills() {
                           <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100 rounded-md">
                             <span className="flex items-center gap-1.5 text-xs font-medium text-white bg-black/70 px-3 py-1.5 rounded-full border border-white/10 shadow-xs">
                               <Maximize2 className="h-3.5 w-3.5 text-[#FF7A18]" />
-                              <span>View certificate</span>
+                              <span>{t("skills.cert1.viewLabel")}</span>
                             </span>
                           </div>
                         </div>
                       </div>
 
                       <p className="mt-2 text-xs text-[#6B6862] dark:text-[#8A8A8F]">
-                        Issued by Anthropic
+                        {t("skills.cert1.issuedBy")}
                       </p>
                     </div>
                   </div>
@@ -289,18 +297,18 @@ export default function Skills() {
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
-                  className="rounded-xl border border-black/[0.08] dark:border-white/[0.08] bg-white dark:bg-[#141416] p-6 flex flex-col justify-between h-full space-y-4"
+                  className="editorial-card-hover rounded-xl border border-black/[0.08] dark:border-white/[0.08] bg-white dark:bg-[#141416] p-6 flex flex-col justify-between h-full space-y-4"
                 >
                   <div className="flex-1 flex flex-col justify-between space-y-4">
                     <div>
                       <h5 className="text-lg font-bold text-[#16150F] dark:text-[#F2F0ED]">
-                        MR. UP-UK 2K19 — Winner
+                        {t("skills.cert2.title")}
                       </h5>
                       <p className="mt-1 text-sm text-[#6B6862] dark:text-[#8A8A8F]">
-                        V.V.N Enterprises · Kanpur · 2019
+                        {t("skills.cert2.issuer")}
                       </p>
                       <p className="mt-2 text-sm text-[#6B6862] dark:text-[#8A8A8F]">
-                        Covered in Dainik Jagran.
+                        {t("skills.cert2.body")}
                       </p>
                     </div>
 
@@ -316,13 +324,13 @@ export default function Skills() {
                         }}
                         tabIndex={0}
                         role="button"
-                        aria-label="View Dainik Jagran 2019 newspaper coverage for MR. UP-UK 2K19 Winner Adarsh Srivastav"
+                        aria-label={t("skills.cert2.ariaLabel")}
                         className="group relative w-full aspect-[4/3] overflow-hidden rounded-lg border border-black/[0.08] dark:border-white/[0.08] bg-[#FAF8F5] dark:bg-[#0B0B0C] cursor-pointer transition-all hover:border-[#C2410C]/40 dark:hover:border-[#FF7A18]/40 focus:outline-none focus:ring-2 focus:ring-[#FF7A18]/50"
                       >
                         {!newspaperImageError && (
                           <Image
                             src={newspaperImgSrc}
-                            alt="Dainik Jagran 2019 newspaper coverage for MR. UP-UK 2K19 Winner Adarsh Srivastav"
+                            alt={t("skills.cert2.ariaLabel")}
                             fill
                             className={`object-cover transition-transform duration-300 group-hover:scale-105 ${
                               newspaperImageLoaded ? "opacity-100" : "opacity-0"
@@ -336,7 +344,7 @@ export default function Skills() {
                         {(!newspaperImageLoaded || newspaperImageError) && (
                           <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center select-none">
                             <span className="text-xs sm:text-sm font-medium text-[#6B6862] dark:text-[#8A8A8F]">
-                              MR. UP-UK 2K19 — Newspaper Clipping
+                              {t("skills.cert2.fallback")}
                             </span>
                           </div>
                         )}
@@ -347,7 +355,7 @@ export default function Skills() {
                       </div>
 
                       <p className="mt-2 text-xs text-[#6B6862] dark:text-[#8A8A8F]">
-                        Dainik Jagran, 2019
+                        {t("skills.cert2.issuedBy")}
                       </p>
                     </div>
                   </div>
@@ -378,7 +386,7 @@ export default function Skills() {
               <button
                 onClick={() => setActiveLightbox(null)}
                 className="absolute top-3 right-3 z-10 rounded-full bg-black/60 p-2 text-white transition-colors hover:bg-black"
-                aria-label="Close modal"
+                aria-label={t("skills.closeModal")}
               >
                 <X className="h-5 w-5" />
               </button>
@@ -388,7 +396,7 @@ export default function Skills() {
                   !claudeImageError ? (
                     <Image
                       src={claudeImgSrc}
-                      alt="Claude 101 Certificate of Completion from Anthropic Academy"
+                      alt={t("skills.cert1.ariaLabel")}
                       fill
                       className="object-contain"
                       priority
@@ -396,10 +404,10 @@ export default function Skills() {
                   ) : (
                     <div className="flex h-full w-full flex-col items-center justify-center p-8 text-center text-[#8A8A8F]">
                       <p className="text-base font-semibold text-white mb-2">
-                        Claude 101 — Certificate of Completion
+                        {t("skills.cert1.title")}
                       </p>
                       <p className="text-sm">
-                        Anthropic Academy · 2026
+                        {t("skills.cert1.issuer")}
                       </p>
                       <p className="mt-4 text-xs text-[#8A8A8F]">
                         Image file will display here once added to <br />
@@ -411,7 +419,7 @@ export default function Skills() {
                   !newspaperImageError ? (
                     <Image
                       src={newspaperImgSrc}
-                      alt="Full size Dainik Jagran 2019 newspaper clipping"
+                      alt={t("skills.cert2.ariaLabel")}
                       fill
                       className="object-contain"
                       priority
@@ -419,10 +427,10 @@ export default function Skills() {
                   ) : (
                     <div className="flex h-full w-full flex-col items-center justify-center p-8 text-center text-[#8A8A8F]">
                       <p className="text-base font-semibold text-white mb-2">
-                        MR. UP-UK 2K19 — Newspaper Clipping
+                        {t("skills.cert2.fallback")}
                       </p>
                       <p className="text-sm">
-                        Dainik Jagran, 2019
+                        {t("skills.cert2.issuedBy")}
                       </p>
                       <p className="mt-4 text-xs text-[#8A8A8F]">
                         Image file will display here once added to <br />

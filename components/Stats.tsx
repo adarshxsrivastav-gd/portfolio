@@ -2,6 +2,8 @@
 
 import { motion, useInView, animate } from "framer-motion";
 import { useEffect, useRef } from "react";
+import { useLanguage } from "./LanguageProvider";
+import { TranslationKey } from "@/lib/i18n";
 
 function Counter({ to }: { to: number }) {
   const nodeRef = useRef<HTMLSpanElement>(null);
@@ -10,11 +12,12 @@ function Counter({ to }: { to: number }) {
   useEffect(() => {
     if (inView && nodeRef.current) {
       const node = nodeRef.current;
+      const isDecimal = to % 1 !== 0;
       const controls = animate(0, to, {
         duration: 1.8,
         ease: "easeOut",
         onUpdate(value) {
-          node.textContent = Math.round(value).toString();
+          node.textContent = isDecimal ? value.toFixed(1) : Math.round(value).toString();
         },
       });
       return () => controls.stop();
@@ -24,14 +27,16 @@ function Counter({ to }: { to: number }) {
   return <span ref={nodeRef}>{to}</span>;
 }
 
-const STATS_DATA = [
-  { num: 350, label: "Projects Completed" },
-  { num: 2, label: "Years of Experience" },
-  { num: 15, label: "Happy Clients" },
-  { num: 7, label: "Design Categories" },
+const STATS_DATA: { num: number; labelKey: TranslationKey }[] = [
+  { num: 350, labelKey: "stats.projectsCompleted" },
+  { num: 2.5, labelKey: "stats.yearsOfExperience" },
+  { num: 15, labelKey: "stats.happyClients" },
+  { num: 15, labelKey: "stats.designCategories" },
 ];
 
 export default function Stats() {
+  const { t } = useLanguage();
+
   return (
     <section className="relative z-10 w-full min-h-[160px] bg-[#FAF8F5] transition-colors duration-300 dark:bg-[#0B0B0C] py-20 px-8 md:px-24 border-y border-black/[0.08] dark:border-white/[0.08]">
       <div className="mx-auto max-w-7xl">
@@ -50,7 +55,7 @@ export default function Stats() {
                 <span className="ml-1 text-2xl md:text-4xl text-[#C2410C] dark:text-[#FF7A18] font-bold">+</span>
               </div>
               <p className="mt-2 text-xs font-bold uppercase tracking-widest text-[#6B6862] dark:text-[#8A8A8F]">
-                {stat.label}
+                {t(stat.labelKey)}
               </p>
             </motion.div>
           ))}

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { ImageGallery } from "@/components/ImageGallery";
+import { useLanguage } from "@/components/LanguageProvider";
 
 const VIDEO_MOTIONS = [
   {
@@ -24,6 +25,8 @@ const VIDEO_MOTIONS = [
 ];
 
 export default function VideoAndMotionsPage() {
+  const { t } = useLanguage();
+
   return (
     <main className="min-h-screen bg-transparent">
       <div className="mx-auto max-w-7xl px-8 py-24 md:px-24">
@@ -37,7 +40,7 @@ export default function VideoAndMotionsPage() {
             className="mb-8 inline-flex items-center gap-2 text-[#6B6862] dark:text-[#8A8A8F] transition-colors hover:text-[#C2410C] dark:hover:text-[#FF7A18] font-medium"
           >
             <ArrowLeft size={20} />
-            <span>Back to Portfolio</span>
+            <span>{t("category.back")}</span>
           </Link>
         </motion.div>
 
@@ -47,10 +50,10 @@ export default function VideoAndMotionsPage() {
           transition={{ duration: 0.6 }}
         >
           <h1 className="mb-6 text-4xl font-extrabold tracking-tight md:text-6xl text-[#16150F] dark:text-[#F2F0ED]">
-            Video & Motions
+            {t("expertise.videoMotions.title")}
           </h1>
           <p className="max-w-3xl text-lg text-[#6B6862] dark:text-[#8A8A8F] md:text-xl mb-12">
-            Dynamic motion graphics and video editing projects crafted to elevate brand storytelling across digital and broadcast channels.
+            {t("category.videoMotions.desc")}
           </p>
         </motion.div>
 

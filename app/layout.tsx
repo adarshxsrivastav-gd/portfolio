@@ -1,16 +1,25 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Poppins, Noto_Sans_Devanagari } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { LanguageProvider, LanguageContentWrapper } from "@/components/LanguageProvider";
 import { HeaderActions } from "@/components/HeaderActions";
 import { MotionConfig } from "framer-motion";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const inter = Inter({
+const poppins = Poppins({
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-poppins",
+});
+
+const notoSansDevanagari = Noto_Sans_Devanagari({
+  subsets: ["devanagari"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+  variable: "--font-devanagari",
 });
 
 const siteUrl = "https://adarshsrivastav.in";
@@ -79,18 +88,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html lang="en" className={`${poppins.variable} ${notoSansDevanagari.variable}`} suppressHydrationWarning>
       <body
-        className={`${inter.className} antialiased transition-colors duration-300 bg-[#FAF8F5] dark:bg-[#0B0B0C] text-[#16150F] dark:text-[#F2F0ED]`}
+        className="font-sans antialiased transition-colors duration-300 bg-[#FAF8F5] dark:bg-[#0B0B0C] text-[#16150F] dark:text-[#F2F0ED]"
       >
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <HeaderActions />
-          <MotionConfig reducedMotion="user">{children}</MotionConfig>
-        </ThemeProvider>
+        <LanguageProvider>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+            <HeaderActions />
+            <LanguageContentWrapper>
+              <MotionConfig reducedMotion="user">{children}</MotionConfig>
+            </LanguageContentWrapper>
+          </ThemeProvider>
+        </LanguageProvider>
         {process.env.NODE_ENV === "production" && (
           <>
             <Analytics />

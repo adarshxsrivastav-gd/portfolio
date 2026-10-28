@@ -1,15 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLanguage } from "./LanguageProvider";
 
 const BRANDS = [
-  { id: 1, name: "Apollo Hospitals", category: "Healthcare & Hospitals" },
-  { id: 2, name: "Medanta Hospitals", category: "Multi-Speciality Care" },
-  { id: 3, name: "Shudh Dairy", category: "Pure Dairy & Foods" },
-  { id: 4, name: "Orancia", category: "Skincare & Personal Care" },
+  { id: 1, name: "Apollo Hospitals", categoryKey: "brands.apollo.category" },
+  { id: 2, name: "Medanta Hospitals", categoryKey: "brands.medanta.category" },
+  { id: 3, name: "Shudh Dairy", categoryKey: "brands.shudh.category" },
+  { id: 4, name: "Orancia", categoryKey: "brands.orancia.category" },
 ];
 
 export default function Brands() {
+  const { t } = useLanguage();
   const marqueeBrands = [...BRANDS, ...BRANDS, ...BRANDS, ...BRANDS];
 
   return (
@@ -22,7 +24,7 @@ export default function Brands() {
           transition={{ duration: 0.6 }}
         >
           <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight md:text-5xl text-[#16150F] dark:text-[#F2F0ED]">
-            Clients & Brands
+            {t("brands.heading")}
           </h3>
         </motion.div>
       </div>
@@ -48,7 +50,7 @@ export default function Brands() {
                     {item.name}
                   </span>
                   <span className="text-xs sm:text-sm text-[#6B6862] dark:text-[#8A8A8F] transition-colors whitespace-nowrap mt-0.5 sm:mt-1">
-                    {item.category}
+                    {t(item.categoryKey as Parameters<typeof t>[0])}
                   </span>
                 </div>
 

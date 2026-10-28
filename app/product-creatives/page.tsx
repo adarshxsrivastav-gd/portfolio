@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { ImageGallery } from "@/components/ImageGallery";
+import { useLanguage } from "@/components/LanguageProvider";
 
 const PRODUCT_CREATIVES = [
   {
@@ -44,6 +45,8 @@ const PRODUCT_CREATIVES = [
 ];
 
 export default function ProductCreativesPage() {
+  const { t } = useLanguage();
+
   return (
     <main className="min-h-screen bg-transparent">
       <div className="mx-auto max-w-7xl px-8 py-24 md:px-24">
@@ -57,7 +60,7 @@ export default function ProductCreativesPage() {
             className="mb-8 inline-flex items-center gap-2 text-[#6B6862] dark:text-[#8A8A8F] transition-colors hover:text-[#C2410C] dark:hover:text-[#FF7A18] font-medium"
           >
             <ArrowLeft size={20} />
-            <span>Back to Portfolio</span>
+            <span>{t("category.back")}</span>
           </Link>
         </motion.div>
 
@@ -67,10 +70,10 @@ export default function ProductCreativesPage() {
           transition={{ duration: 0.6 }}
         >
           <h1 className="mb-6 text-4xl font-extrabold tracking-tight md:text-6xl text-[#16150F] dark:text-[#F2F0ED]">
-            Product Creatives
+            {t("expertise.productCreatives.title")}
           </h1>
           <p className="max-w-3xl text-lg text-[#6B6862] dark:text-[#8A8A8F] md:text-xl mb-12">
-            Conversion-focused product imagery elegantly tailored to spotlight key features and accelerate digital e-commerce sales.
+            {t("category.productCreatives.desc")}
           </p>
         </motion.div>
 

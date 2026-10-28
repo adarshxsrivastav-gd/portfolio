@@ -2,10 +2,50 @@
 
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, ArrowRight, Download } from "lucide-react";
+import { useLanguage } from "./LanguageProvider";
+import { TranslationKey } from "@/lib/i18n";
 
 export default function Contact() {
+  const { t } = useLanguage();
+
+  const NAV_LINKS: { labelKey: TranslationKey; href: string }[] = [
+    { labelKey: "contact.nav.about", href: "#about" },
+    { labelKey: "contact.nav.experience", href: "#experience" },
+    { labelKey: "contact.nav.skills", href: "#skills" },
+    { labelKey: "contact.nav.expertise", href: "#design-expertise" },
+    { labelKey: "contact.nav.contact", href: "#contact" },
+  ];
+
+  const CONTACT_CARDS: {
+    icon: React.ReactNode;
+    titleKey: TranslationKey;
+    value: string;
+    href: string | null;
+    external?: boolean;
+  }[] = [
+    {
+      icon: <Mail className="h-6 w-6" />,
+      titleKey: "contact.email.title",
+      value: "adarshxsrivastav@gmail.com",
+      href: "mailto:adarshxsrivastav@gmail.com?subject=Project%20Inquiry&body=Hi%20Adarsh%2C%20I%20would%20like%20to%20work%20with%20you.",
+    },
+    {
+      icon: <Phone className="h-6 w-6" />,
+      titleKey: "contact.phone.title",
+      value: "+91-7270871614",
+      href: "https://wa.me/917270871614?text=Hi%20Adarsh%2C%20I%20want%20to%20connect%20with%20you.",
+      external: true,
+    },
+    {
+      icon: <MapPin className="h-6 w-6" />,
+      titleKey: "contact.location.title",
+      value: t("contact.location.value"),
+      href: null,
+    },
+  ];
+
   return (
-    <footer className="relative z-10 border-t border-black/[0.08] dark:border-white/[0.08] bg-[#FAF8F5] transition-colors duration-300 dark:bg-[#0B0B0C] px-6 sm:px-8 py-24 text-[#16150F] dark:text-[#F2F0ED] md:px-24">
+    <footer id="contact" className="relative z-10 border-t border-black/[0.08] dark:border-white/[0.08] bg-[#FAF8F5] transition-colors duration-300 dark:bg-[#0B0B0C] px-6 sm:px-8 py-24 text-[#16150F] dark:text-[#F2F0ED] md:px-24">
       <div className="mx-auto max-w-7xl">
         
         {/* CTA Block */}
@@ -17,10 +57,10 @@ export default function Contact() {
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
           <h2 className="text-3xl md:text-5xl font-extrabold mb-6 tracking-tight text-[#16150F] dark:text-[#F2F0ED] relative z-10">
-            Ready to elevate your brand?
+            {t("contact.cta.heading")}
           </h2>
           <p className="text-base md:text-lg text-[#6B6862] dark:text-[#8A8A8F] max-w-2xl mx-auto mb-10 relative z-10 leading-relaxed font-normal">
-            Open for Freelance and Full-Time opportunities. Let's collaborate to transform your ideas into visually powerful digital experiences.
+            {t("contact.cta.body")}
           </p>
           
           <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -30,7 +70,7 @@ export default function Contact() {
               whileHover={{ scale: 1.03, y: -2 }}
               whileTap={{ scale: 0.97 }}
             >
-              Let's Work Together
+              {t("contact.cta.primary")}
               <ArrowRight size={18} />
             </motion.a>
 
@@ -43,35 +83,14 @@ export default function Contact() {
               whileTap={{ scale: 0.97 }}
             >
               <Download size={18} className="text-[#C2410C] dark:text-[#FF7A18]" />
-              Download Resume
+              {t("contact.cta.resume")}
             </motion.a>
           </div>
         </motion.div>
 
         {/* Contact Cards */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3 mb-16">
-          {[
-            {
-              icon: <Mail className="h-6 w-6" />,
-              title: "Email Me",
-              value: "adarshxsrivastav@gmail.com",
-              href: "mailto:adarshxsrivastav@gmail.com?subject=Project%20Inquiry&body=Hi%20Adarsh%2C%20I%20would%20like%20to%20work%20with%20you."
-            },
-            {
-              icon: <Phone className="h-6 w-6" />,
-              title: "Connect with Me",
-              value: "+91-7270871614",
-              href: "https://wa.me/917270871614?text=Hi%20Adarsh%2C%20I%20want%20to%20connect%20with%20you.",
-              external: true
-            },
-            {
-              icon: <MapPin className="h-6 w-6" />,
-              title: "Location",
-              value: "Lucknow, Uttar Pradesh, India",
-              href: null,
-              external: false
-            }
-          ].map((item, index) => (
+          {CONTACT_CARDS.map((item, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -90,7 +109,7 @@ export default function Contact() {
                   <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-lg bg-[#FAF8F5] dark:bg-[#0B0B0C] text-[#C2410C] dark:text-[#FF7A18] transition-transform duration-300 group-hover:scale-105">
                     {item.icon}
                   </div>
-                  <h3 className="text-lg font-bold mb-1 text-[#16150F] dark:text-[#F2F0ED]">{item.title}</h3>
+                  <h3 className="text-lg font-bold mb-1 text-[#16150F] dark:text-[#F2F0ED]">{t(item.titleKey)}</h3>
                   <p className="text-[#6B6862] dark:text-[#8A8A8F] text-center text-sm">{item.value}</p>
                 </motion.a>
               ) : (
@@ -101,7 +120,7 @@ export default function Contact() {
                   <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-lg bg-[#FAF8F5] dark:bg-[#0B0B0C] text-[#C2410C] dark:text-[#FF7A18] transition-transform duration-300 group-hover:scale-105">
                     {item.icon}
                   </div>
-                  <h3 className="text-lg font-bold mb-1 text-[#16150F] dark:text-[#F2F0ED]">{item.title}</h3>
+                  <h3 className="text-lg font-bold mb-1 text-[#16150F] dark:text-[#F2F0ED]">{t(item.titleKey)}</h3>
                   <p className="text-[#6B6862] dark:text-[#8A8A8F] text-center text-sm">{item.value}</p>
                 </motion.div>
               )}
@@ -122,21 +141,21 @@ export default function Contact() {
             {/* Column 1: Brand */}
             <div className="flex flex-col items-center md:items-start">
               <h3 className="text-xl font-bold text-[#16150F] dark:text-[#F2F0ED] mb-2">Adarsh Srivastav</h3>
-              <p className="text-[#C2410C] dark:text-[#FF7A18] text-sm mb-4 font-semibold">Graphic Designer & Video Editor | AI-Powered Creative Production</p>
-              <p className="text-[#6B6862] dark:text-[#8A8A8F] text-sm">Open for Freelance & Full-Time opportunities</p>
+              <p className="text-[#C2410C] dark:text-[#FF7A18] text-sm mb-4 font-semibold">{t("contact.footer.tagline")}</p>
+              <p className="text-[#6B6862] dark:text-[#8A8A8F] text-sm">{t("contact.footer.availability")}</p>
             </div>
 
             {/* Column 2: Quick Links */}
             <div className="flex flex-col items-center md:items-start">
-              <h4 className="text-xs font-bold uppercase tracking-widest text-[#C2410C] dark:text-[#FF7A18] mb-6">Quick Links</h4>
+              <h4 className="text-xs font-bold uppercase tracking-widest text-[#C2410C] dark:text-[#FF7A18] mb-6">{t("contact.footer.quickLinks")}</h4>
               <nav className="flex flex-col space-y-3">
-                {["About", "Experience", "Skills", "Design Expertise", "Contact"].map((link) => (
+                {NAV_LINKS.map((link) => (
                   <a
-                    key={link}
-                    href={`#${link.toLowerCase().replace(" ", "-")}`}
+                    key={link.href}
+                    href={link.href}
                     className="text-[#6B6862] dark:text-[#8A8A8F] hover:text-[#C2410C] dark:hover:text-[#FF7A18] transition-colors text-sm font-medium"
                   >
-                    {link}
+                    {t(link.labelKey)}
                   </a>
                 ))}
               </nav>
@@ -144,7 +163,7 @@ export default function Contact() {
 
             {/* Column 3: Connect With Me */}
             <div className="flex flex-col items-center md:items-start">
-              <h4 className="text-xs font-bold uppercase tracking-widest text-[#C2410C] dark:text-[#FF7A18] mb-6">Connect With Me</h4>
+              <h4 className="text-xs font-bold uppercase tracking-widest text-[#C2410C] dark:text-[#FF7A18] mb-6">{t("contact.footer.connectWithMe")}</h4>
               <div className="flex items-center gap-4">
                 <a
                   href="https://www.linkedin.com/in/adarsh-srivastav-3947b3201"
@@ -196,7 +215,7 @@ export default function Contact() {
           </div>
           
           <div className="border-t border-black/[0.08] dark:border-white/[0.08] pt-8 text-center">
-            <p className="text-xs text-[#6B6862] dark:text-[#8A8A8F]">© 2026 Adarsh Srivastav. All Rights Reserved.</p>
+            <p className="text-xs text-[#6B6862] dark:text-[#8A8A8F]">{t("contact.footer.copyright")}</p>
           </div>
         </motion.div>
       </div>

@@ -1,21 +1,16 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
-
-export const metadata: Metadata = {
-  title: "Molly — A Mascot System for Gyandhara | Adarsh Srivastav",
-  description:
-    "How a single mascot brief became a four-persona brand character system for Gyandhara's farmer audience.",
-};
+import { useLanguage } from "@/components/LanguageProvider";
 
 const PERSONAS = [
   {
     id: "doctor-molly",
     name: "Doctor Molly",
-    description:
-      "— the expert. White coat, stethoscope, gold nameplate. Speaks with clinical authority for farmers who want the science behind the feed.",
+    descKey: "molly.persona.doctor.desc" as const,
     imageLabel: "Doctor Molly — Persona Image",
     imagePath: "/images/work/molly-mascot/doctor-molly.webp",
     alt: "Doctor Molly mascot persona",
@@ -23,8 +18,7 @@ const PERSONAS = [
   {
     id: "mata-molly",
     name: "Mata Molly",
-    description:
-      "— the traditional voice. Frames solutions the way a mother does, through remedies passed down rather than prescribed. For farmers who trust inherited knowledge over instruction.",
+    descKey: "molly.persona.mata.desc" as const,
     imageLabel: "Mata Molly — Persona Image",
     imagePath: "/images/work/molly-mascot/mata-molly.webp",
     alt: "Mata Molly mascot persona",
@@ -32,8 +26,7 @@ const PERSONAS = [
   {
     id: "didi-molly",
     name: "Didi Molly",
-    description:
-      "— the sister. Always around, always available. Listens to the problem before answering it. For farmers who want to be heard, not lectured.",
+    descKey: "molly.persona.didi.desc" as const,
     imageLabel: "Didi Molly — Persona Image",
     imagePath: "/images/work/molly-mascot/didi-molly.webp",
     alt: "Didi Molly mascot persona",
@@ -41,8 +34,7 @@ const PERSONAS = [
   {
     id: "modern-molly",
     name: "Modern Molly",
-    description:
-      "— the progressive farmer's counterpart. Speaks to those running their farms on data, scale and new methods.",
+    descKey: "molly.persona.modern.desc" as const,
     imageLabel: "Modern Molly — Persona Image",
     imagePath: "/images/work/molly-mascot/modern-molly.webp",
     alt: "Modern Molly mascot persona",
@@ -50,6 +42,8 @@ const PERSONAS = [
 ];
 
 export default function MollyMascotCaseStudy() {
+  const { t } = useLanguage();
+
   return (
     <main className="min-h-screen bg-[#FAF8F5] transition-colors duration-300 dark:bg-[#0B0B0C] px-6 sm:px-8 py-16 md:py-24 text-[#16150F] dark:text-[#F2F0ED]">
       <div className="mx-auto max-w-[700px]">
@@ -60,17 +54,17 @@ export default function MollyMascotCaseStudy() {
             className="inline-flex items-center gap-2 text-sm md:text-base font-medium text-[#6B6862] dark:text-[#8A8A8F] transition-colors hover:text-[#C2410C] dark:hover:text-[#FF7A18] group"
           >
             <ArrowLeft className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" />
-            <span>Back to work</span>
+            <span>{t("molly.backToWork")}</span>
           </Link>
         </div>
 
         {/* Header Title & Subtitle */}
         <header className="mb-8 md:mb-10">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#16150F] dark:text-[#F2F0ED] mb-3 md:mb-4">
-            Molly — A Mascot System for Gyandhara
+            {t("molly.title")}
           </h1>
           <p className="text-base sm:text-lg text-[#6B6862] dark:text-[#8A8A8F] font-medium">
-            Brand character design · Gyandhara Industries · 2026
+            {t("molly.subtitle")}
           </p>
         </header>
 
@@ -94,14 +88,14 @@ export default function MollyMascotCaseStudy() {
           <section className="space-y-4">
             <div className="border-t border-[#C2410C]/40 dark:border-[#FF7A18]/40 pt-6 md:pt-8 mb-4">
               <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#16150F] dark:text-[#F2F0ED]">
-                The problem
+                {t("molly.section.problem")}
               </h2>
             </div>
             <p className="text-[#16150F] dark:text-[#F2F0ED]">
-              Gyandhara needed a brand face. The parent brand, Gyan, already had a celebrity-led campaign featuring a cow named Molly — but Gyandhara had no mascot of its own. External agencies were quoting heavily for the work, and the brief kept getting delayed.
+              {t("molly.body.problem1")}
             </p>
             <p className="text-[#16150F] dark:text-[#F2F0ED]">
-              I had never designed a mascot before. I was given the vision and asked to build it in-house.
+              {t("molly.body.problem2")}
             </p>
           </section>
 
@@ -109,11 +103,11 @@ export default function MollyMascotCaseStudy() {
           <section className="space-y-4">
             <div className="border-t border-[#C2410C]/40 dark:border-[#FF7A18]/40 pt-6 md:pt-8 mb-4">
               <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#16150F] dark:text-[#F2F0ED]">
-                Understanding the brief
+                {t("molly.section.brief")}
               </h2>
             </div>
             <p className="text-[#16150F] dark:text-[#F2F0ED]">
-              I spent five days before drawing anything — working through what the mascot actually had to carry. A white cow. A doctor&apos;s presence. Something that would hold authority with farmers while still feeling warm.
+              {t("molly.body.brief1")}
             </p>
           </section>
 
@@ -121,14 +115,14 @@ export default function MollyMascotCaseStudy() {
           <section className="space-y-6">
             <div className="border-t border-[#C2410C]/40 dark:border-[#FF7A18]/40 pt-6 md:pt-8 mb-4">
               <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#16150F] dark:text-[#F2F0ED]">
-                The decision
+                {t("molly.section.decision")}
               </h2>
             </div>
             <p className="text-[#16150F] dark:text-[#F2F0ED]">
-              The brief asked for one mascot. I proposed four.
+              {t("molly.body.decision1")}
             </p>
             <p className="text-[#16150F] dark:text-[#F2F0ED]">
-              A single character speaks in a single voice, but Gyandhara&apos;s audience isn&apos;t one audience. A farmer who trusts scientific expertise and a farmer who trusts his mother&apos;s home remedies are not persuaded by the same face. So instead of one mascot, I designed a persona system — four expressions of Molly, each built around a different relationship of trust.
+              {t("molly.body.decision2")}
             </p>
 
             {/* Persona 2x2 Image Grid */}
@@ -151,7 +145,7 @@ export default function MollyMascotCaseStudy() {
                   <span className="font-bold text-[#C2410C] dark:text-[#FF7A18]">
                     {persona.name}
                   </span>{" "}
-                  {persona.description}
+                  {t(persona.descKey)}
                 </div>
               ))}
             </div>
@@ -161,14 +155,14 @@ export default function MollyMascotCaseStudy() {
           <section className="space-y-4">
             <div className="border-t border-[#C2410C]/40 dark:border-[#FF7A18]/40 pt-6 md:pt-8 mb-4">
               <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#16150F] dark:text-[#F2F0ED]">
-                The outcome
+                {t("molly.section.outcome")}
               </h2>
             </div>
             <p className="text-[#16150F] dark:text-[#F2F0ED]">
-              All four were approved. Gyandhara went from having no mascot to owning a complete brand character system, built in-house.
+              {t("molly.body.outcome1")}
             </p>
             <p className="text-[#16150F] dark:text-[#F2F0ED]">
-              Molly is currently live across reels and social posts, with packaging and hoarding applications planned as the character rolls out further.
+              {t("molly.body.outcome2")}
             </p>
           </section>
         </article>
@@ -180,7 +174,7 @@ export default function MollyMascotCaseStudy() {
             className="inline-flex items-center gap-2 text-sm md:text-base font-medium text-[#6B6862] dark:text-[#8A8A8F] transition-colors hover:text-[#C2410C] dark:hover:text-[#FF7A18] group"
           >
             <ArrowLeft className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" />
-            <span>Back to home</span>
+            <span>{t("molly.backToHome")}</span>
           </Link>
         </div>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLanguage } from "./LanguageProvider";
 
 const ChatGPTIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
@@ -80,19 +81,20 @@ const GooglePomelliIcon = () => (
 );
 
 const AI_TOOLS = [
-  { id: 1, name: "Gemini", description: "Research, ideation and content references", icon: <GeminiIcon /> },
-  { id: 2, name: "ChatGPT", description: "Copywriting, brainstorming and prompt crafting", icon: <ChatGPTIcon /> },
-  { id: 3, name: "Claude", description: "Problem solving and creative feedback", icon: <ClaudeIcon /> },
-  { id: 4, name: "Google Antigravity", description: "Building and managing my portfolio website", icon: <AntigravityIcon /> },
-  { id: 5, name: "NotebookLM", description: "Organizing research and project notes", icon: <NotebookLMIcon /> },
-  { id: 6, name: "Perplexity", description: "Quick fact checking and web research", icon: <PerplexityIcon /> },
-  { id: 7, name: "Grok", description: "Trend analysis and creative exploration", icon: <GrokIcon /> },
-  { id: 8, name: "LoveArt", description: "AI image generation for visual concepts", icon: <LoveArtIcon /> },
-  { id: 9, name: "Google Flow", description: "Prompt-to-workflow automation & creative asset pipelines", icon: <GoogleFlowIcon /> },
-  { id: 10, name: "Google Pomelli", description: "AI brand asset generation & visual identity management", icon: <GooglePomelliIcon /> },
+  { id: 1, name: "Gemini", descKey: "ai.gemini.desc", icon: <GeminiIcon /> },
+  { id: 2, name: "ChatGPT", descKey: "ai.chatgpt.desc", icon: <ChatGPTIcon /> },
+  { id: 3, name: "Claude", descKey: "ai.claude.desc", icon: <ClaudeIcon /> },
+  { id: 4, name: "Google Antigravity", descKey: "ai.antigravity.desc", icon: <AntigravityIcon /> },
+  { id: 5, name: "NotebookLM", descKey: "ai.notebooklm.desc", icon: <NotebookLMIcon /> },
+  { id: 6, name: "Perplexity", descKey: "ai.perplexity.desc", icon: <PerplexityIcon /> },
+  { id: 7, name: "Grok", descKey: "ai.grok.desc", icon: <GrokIcon /> },
+  { id: 8, name: "LoveArt", descKey: "ai.loveart.desc", icon: <LoveArtIcon /> },
+  { id: 9, name: "Google Flow", descKey: "ai.googleflow.desc", icon: <GoogleFlowIcon /> },
+  { id: 10, name: "Google Pomelli", descKey: "ai.pomelli.desc", icon: <GooglePomelliIcon /> },
 ];
 
 export default function AIToolkit() {
+  const { t } = useLanguage();
   const marqueeTools = [...AI_TOOLS, ...AI_TOOLS];
 
   return (
@@ -104,7 +106,7 @@ export default function AIToolkit() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6 }}
         >
-          <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight md:text-5xl text-[#16150F] dark:text-[#F2F0ED]">AI Toolkit & Creative Stack</h3>
+          <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight md:text-5xl text-[#16150F] dark:text-[#F2F0ED]">{t("ai.heading")}</h3>
         </motion.div>
       </div>
 
@@ -133,7 +135,7 @@ export default function AIToolkit() {
                     {item.name}
                   </h4>
                   <p className="text-xs sm:text-sm leading-relaxed text-[#6B6862] dark:text-[#8A8A8F] transition-colors line-clamp-2">
-                    {item.description}
+                    {t(item.descKey as Parameters<typeof t>[0])}
                   </p>
                 </div>
               </div>
